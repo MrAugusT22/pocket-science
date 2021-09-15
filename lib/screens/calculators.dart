@@ -26,7 +26,7 @@ class _CalculatorState extends State<Calculator> {
       body: Padding(
         padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
         child: ListView.separated(
-          padding: EdgeInsets.all(0),
+          // padding: EdgeInsets.all(0),
           separatorBuilder: (context, index) {
             return SizedBox(height: 5);
           },

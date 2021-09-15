@@ -17,11 +17,12 @@ class InvestmentCardText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontFamily: 'RobotoMono',
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontStyle: fontStyle,
+        fontFamily: 'RobotoMono',
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: fontStyle,
       ),
+      softWrap: true,
     );
   }
 }

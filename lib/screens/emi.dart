@@ -203,6 +203,7 @@ class _EmiState extends State<Emi> {
             ),
             SizedBox(height: 10),
             AdditionalDataCard(
+              elevation: 5.0,
               title: 'EMI',
               info:
                   'An equated monthly installment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. Equated monthly installments are applied to both interest and principal each month so that over a specified number of years, the loan is paid off in full. In the most common types of loans—such as real estate mortgages, auto loans, and student loans—the borrower makes fixed periodic payments to the lender over the course of several years with the goal of retiring the loan.',

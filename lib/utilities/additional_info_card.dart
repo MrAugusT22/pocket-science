@@ -7,20 +7,32 @@ import 'package:provider/provider.dart';
 class AdditionalDataCard extends StatelessWidget {
   final title;
   final info;
-  AdditionalDataCard({@required this.title, @required this.info});
+  final elevation;
+  AdditionalDataCard(
+      {this.title = '', this.info = '', this.elevation = 5.0});
 
   @override
   Widget build(BuildContext context) {
+    bool noInfo = false;
+    bool noTitle = false;
+    if (info == '') {
+      noInfo = true;
+    }
+    if (title == '') {
+      noTitle = true;
+    }
+
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       return Material(
-        elevation: 5,
+        elevation: elevation,
         borderRadius: BorderRadius.circular(20),
         color: Colors.transparent,
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
+              borderRadius: BorderRadius.circular(20),
+              color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
           child: Column(
             children: [
               Row(
@@ -31,16 +43,17 @@ class AdditionalDataCard extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   InvestmentCardText(
-                    text: title,
-                    fontSize: 20.0,
+                    text: '${noTitle ? 'No info' : title}',
                   ),
                 ],
               ),
               SizedBox(height: 10),
-              InvestmentCardText(
-                text: info,
-                fontWeight: FontWeight.normal,
-              ),
+              noInfo
+                  ? Container()
+                  : InvestmentCardText(
+                      text: info,
+                      fontWeight: FontWeight.normal,
+                    ),
             ],
           ),
         ),

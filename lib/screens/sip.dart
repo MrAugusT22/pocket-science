@@ -257,6 +257,7 @@ class _SipState extends State<Sip> {
             ),
             SizedBox(height: 10),
             AdditionalDataCard(
+              // elevation: 5.0,
               title: 'SIP?',
               info:
                   'A Systematic Investment Plan (or SIP) is an investment mode through which you can invest in mutual funds. As the term indicates, it is a systematic method of investing fixed amounts of money periodically. This can be monthly, quarterly or semi-annually etc.',

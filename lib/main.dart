@@ -3,6 +3,7 @@ import 'package:fin_calc/screens/calculators.dart';
 import 'package:fin_calc/screens/currency.dart';
 import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/emi.dart';
+import 'package:fin_calc/screens/expenses.dart';
 import 'package:fin_calc/screens/profile.dart';
 import 'package:fin_calc/screens/sip.dart';
 import 'package:fin_calc/screens/home.dart';
@@ -36,6 +37,7 @@ class FinCalc extends StatelessWidget {
           routes: {
             HomePage.id: (context) => Center(child: HomePage()),
             Dashboard.id: (context) => Dashboard(),
+            Expenses.id: (context) => Expenses(),
             Calculator.id: (context) => Calculator(),
             Profile.id: (context) => Profile(),
             Sip.id: (context) => Sip(),

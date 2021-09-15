@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:fin_calc/screens/calculators.dart';
 import 'package:fin_calc/screens/dashboard.dart';
+import 'package:fin_calc/screens/expenses.dart';
 import 'package:fin_calc/screens/profile.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _widgetOptions = [
     Dashboard(),
-    Dashboard(),
+    Expenses(),
     Calculator(),
     Profile(),
   ];

@@ -197,6 +197,7 @@ class _CagrState extends State<Cagr> {
             ),
             SizedBox(height: 10),
             AdditionalDataCard(
+              elevation: 5.0,
               title: 'CAGR?',
               info:
                   'The compound annual growth rate (CAGR) is the rate of return (RoR) that would be required for an investment to grow from its beginning balance to its ending balance, assuming the profits were reinvested at the end of each period of the investment’s life span.',

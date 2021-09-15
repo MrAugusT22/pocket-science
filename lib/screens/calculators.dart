@@ -32,101 +32,85 @@ class _CalculatorState extends State<Calculator> {
           },
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: kMyColor,
-              ),
-              child: ExpansionPanelList(
-                expansionCallback: (i, isOpen) {
-                  setState(() {
-                    _isOpen[i] = !_isOpen[i];
-                  });
-                },
-                elevation: 0,
-                dividerColor: Colors.transparent,
-                children: [
-                  ExpansionPanel(
-                    headerBuilder: (context, open) {
-                      return Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'SIP',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'RobotoMono',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+            return Material(
+              elevation: 5,
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: kMyColor,
+                ),
+                child: ExpansionPanelList(
+                  expansionCallback: (i, isOpen) {
+                    setState(() {
+                      _isOpen[i] = !_isOpen[i];
+                    });
+                  },
+                  elevation: 0,
+                  dividerColor: Colors.transparent,
+                  children: [
+                    ExpansionPanel(
+                      headerBuilder: (context, open) {
+                        return Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'SIP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'RobotoMono',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    body: Sip(),
-                    isExpanded: _isOpen[0],
-                    canTapOnHeader: true,
-                    backgroundColor: Colors.transparent,
-                  ),
-                  ExpansionPanel(
-                    headerBuilder: (context, open) {
-                      return Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'CAGR',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'RobotoMono',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        );
+                      },
+                      body: Sip(),
+                      isExpanded: _isOpen[0],
+                      canTapOnHeader: true,
+                      backgroundColor: Colors.transparent,
+                    ),
+                    ExpansionPanel(
+                      headerBuilder: (context, open) {
+                        return Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'CAGR',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'RobotoMono',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    body: Cagr(),
-                    isExpanded: _isOpen[1],
-                    canTapOnHeader: true,
-                    backgroundColor: Colors.transparent,
-                  ),
-                  ExpansionPanel(
-                    headerBuilder: (context, open) {
-                      return Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'EMI',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'RobotoMono',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        );
+                      },
+                      body: Cagr(),
+                      isExpanded: _isOpen[1],
+                      canTapOnHeader: true,
+                      backgroundColor: Colors.transparent,
+                    ),
+                    ExpansionPanel(
+                      headerBuilder: (context, open) {
+                        return Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'EMI',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'RobotoMono',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    body: Emi(),
-                    isExpanded: _isOpen[2],
-                    canTapOnHeader: true,
-                    backgroundColor: Colors.transparent,
-                  ),
-                  ExpansionPanel(
-                    headerBuilder: (context, open) {
-                      return Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Currency Rates',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'RobotoMono',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    },
-                    body: Currency(),
-                    isExpanded: _isOpen[3],
-                    canTapOnHeader: true,
-                    backgroundColor: Colors.transparent,
-                  ),
-                ],
+                        );
+                      },
+                      body: Emi(),
+                      isExpanded: _isOpen[2],
+                      canTapOnHeader: true,
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ],
+                ),
               ),
             );
           },

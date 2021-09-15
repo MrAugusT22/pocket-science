@@ -12,7 +12,6 @@ const kNonSelectedGradient = LinearGradient(
   end: Alignment.bottomRight,
 );
 
-//My colors
 const kMyDarkBGColor = Color(0xFF232222);
 const kMyLightBGColor = Colors.white;
 const kMyColor = Colors.blue;

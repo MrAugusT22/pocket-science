@@ -1,7 +1,4 @@
-import 'dart:io';
-import 'package:fin_calc/utilities/additional_info_card.dart';
 import 'package:fin_calc/utilities/constants.dart';
-import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/theme_data.dart';
 import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,16 +24,44 @@ class _ExpensesState extends State<Expenses> {
       return Scaffold(
         extendBody: true,
         body: Padding(
-          padding: const EdgeInsets.all(10),
-          child: ListView.separated(
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 5);
-              },
-              physics: BouncingScrollPhysics(),
-              itemCount: count,
-              itemBuilder: (context, index) {
-                return _transactionList[index];
-              }),
+          padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
+          child: Stack(
+            children: [
+              ListView.separated(
+                padding: EdgeInsets.only(bottom: 156, top: 30),
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 5);
+                },
+                physics: BouncingScrollPhysics(),
+                itemCount: count,
+                itemBuilder: (context, index) {
+                  return _transactionList[index];
+                },
+              ),
+              Positioned(
+                bottom: 70,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    print('tapped');
+                  },
+                  child: Material(
+                    elevation: 5,
+                    shape: CircleBorder(),
+                    child: Container(
+                      constraints:
+                          BoxConstraints.tightFor(width: 56, height: 56),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kMyColor,
+                      ),
+                      child: Icon(Icons.add_rounded),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
     });

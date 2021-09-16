@@ -5,11 +5,13 @@ class InvestmentCardText extends StatelessWidget {
   final fontSize;
   final fontStyle;
   final fontWeight;
+  final color;
   InvestmentCardText({
     this.text,
     this.fontSize = 15.0,
     this.fontStyle = FontStyle.normal,
     this.fontWeight = FontWeight.bold,
+    this.color,
   });
 
   @override
@@ -21,7 +23,9 @@ class InvestmentCardText extends StatelessWidget {
         fontSize: fontSize,
         fontWeight: fontWeight,
         fontStyle: fontStyle,
+        color: color,
       ),
+      textAlign: TextAlign.left,
       softWrap: true,
     );
   }

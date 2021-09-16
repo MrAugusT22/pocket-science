@@ -8,8 +8,12 @@ class AdditionalDataCard extends StatelessWidget {
   final title;
   final info;
   final elevation;
+  final transaction;
   AdditionalDataCard(
-      {this.title = '', this.info = '', this.elevation = 5.0});
+      {this.title = '',
+      this.info = '',
+      this.elevation = 5.0,
+      this.transaction = false});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,11 @@ class AdditionalDataCard extends StatelessWidget {
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
+              color: transaction
+                  ? Colors.transparent
+                  : _isDarkMode
+                      ? kMyDarkBGColor
+                      : kMyLightBGColor),
           child: Column(
             children: [
               Row(
@@ -49,7 +57,10 @@ class AdditionalDataCard extends StatelessWidget {
               ),
               SizedBox(height: 10),
               noInfo
-                  ? Container()
+                  ? InvestmentCardText(
+                      text: 'No info!',
+                      fontWeight: FontWeight.normal,
+                    )
                   : InvestmentCardText(
                       text: info,
                       fontWeight: FontWeight.normal,

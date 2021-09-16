@@ -22,6 +22,8 @@ class _ExpensesState extends State<Expenses> {
   Widget build(BuildContext context) {
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
+      int count = Transactions().getTransactionListCount;
+      List<TransactionCard> _transactionList = Transactions().getTransactions;
       return Scaffold(
         extendBody: true,
         body: Padding(
@@ -31,105 +33,9 @@ class _ExpensesState extends State<Expenses> {
                 return SizedBox(height: 5);
               },
               physics: BouncingScrollPhysics(),
-              itemCount: 1,
+              itemCount: count,
               itemBuilder: (context, index) {
-                return Material(
-                  elevation: 5,
-                  borderRadius: BorderRadius.circular(20),
-                  color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.transparent,
-                    ),
-                    child: ExpansionPanelList(
-                      expansionCallback: (i, isOpen) {
-                        setState(() {
-                          _isOpen[i] = !_isOpen[i];
-                        });
-                      },
-                      elevation: 0,
-                      dividerColor: kMyColor,
-                      children: [
-                        ExpansionPanel(
-                          isExpanded: _isOpen[0],
-                          canTapOnHeader: true,
-                          backgroundColor: Colors.transparent,
-                          headerBuilder: (context, open) {
-                            return TransactionCard(
-                              amt: 1500,
-                              bank: 'SBI',
-                              title:
-                                  'Net Banking errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
-                              date: '15 Sept 2021',
-                              debit: false,
-                            );
-                          },
-                          body: AdditionalDataCard(
-                            title: '1 dozen eggs',
-                            info: '',
-                            elevation: 0.0,
-                          ),
-                        ),
-                        ExpansionPanel(
-                          isExpanded: _isOpen[1],
-                          canTapOnHeader: true,
-                          backgroundColor: Colors.transparent,
-                          headerBuilder: (context, open) {
-                            return TransactionCard(
-                              amt: 150,
-                              bank: 'SBI',
-                              title: 'Net Banking',
-                              date: '15 Sept 2021',
-                              debit: true,
-                            );
-                          },
-                          body: AdditionalDataCard(
-                            title: '1 dozen eggs',
-                            info: '',
-                            elevation: 0.0,
-                          ),
-                        ),
-                        ExpansionPanel(
-                          isExpanded: _isOpen[2],
-                          canTapOnHeader: true,
-                          backgroundColor: Colors.transparent,
-                          headerBuilder: (context, open) {
-                            return TransactionCard(
-                              amt: 2000,
-                              bank: 'SBI',
-                              title: 'Net Banking',
-                              date: '15 Sept 2021',
-                              debit: false,
-                            );
-                          },
-                          body: AdditionalDataCard(
-                            title: '1 dozen eggs',
-                            info: '',
-                            elevation: 0.0,
-                          ),
-                        ),
-                        ExpansionPanel(
-                          isExpanded: _isOpen[3],
-                          canTapOnHeader: true,
-                          backgroundColor: Colors.transparent,
-                          headerBuilder: (context, open) {
-                            return TransactionCard(
-                              amt: 1500,
-                              bank: 'SBI',
-                              title: 'Net Banking',
-                              date: '15 Sept 2021',
-                              debit: false,
-                            );
-                          },
-                          body: AdditionalDataCard(
-                            elevation: 0.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return _transactionList[index];
               }),
         ),
       );

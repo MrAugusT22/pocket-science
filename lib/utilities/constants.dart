@@ -34,5 +34,3 @@ InputDecoration kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.circular(20),
   ),
 );
-
-const dateFormat = '';

@@ -17,25 +17,11 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  List<bool> _isOpen = [true, false, false, false];
 
   late TextEditingController _textEditingController1;
   late TextEditingController _textEditingController2;
-  late TextEditingController _textEditingController3;
 
   DateTime selectedDate = DateTime.now();
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
-  }
 
   @override
   void initState() {
@@ -43,7 +29,6 @@ class _ExpensesState extends State<Expenses> {
     super.initState();
     _textEditingController1 = TextEditingController();
     _textEditingController2 = TextEditingController();
-    _textEditingController3 = TextEditingController();
   }
 
   @override
@@ -62,6 +47,10 @@ class _ExpensesState extends State<Expenses> {
 
       double _amt = 0.0;
       String _title = '';
+
+      myThemeData.formatDate(selectedDate);
+      String mon = myThemeData.getDate[0];
+      int date = myThemeData.getDate[1];
 
       return Scaffold(
         extendBody: true,
@@ -98,10 +87,11 @@ class _ExpensesState extends State<Expenses> {
                           return SingleChildScrollView(
                             child: Container(
                               padding: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).viewInsets.bottom),
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom,
+                              ),
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(20),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(30),
@@ -229,11 +219,21 @@ class _ExpensesState extends State<Expenses> {
                                                 picked != selectedDate)
                                               setState(() {
                                                 selectedDate = picked;
+                                                myThemeData
+                                                    .formatDate(selectedDate);
+                                                mon = myThemeData.getDate[0];
+                                                date = myThemeData.getDate[1];
                                               });
                                           },
-                                          child: InvestmentCardText(
-                                            text: "${selectedDate.toLocal()}"
-                                                .split(' ')[0],
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                  Icons.calendar_today_rounded),
+                                              SizedBox(width: 10),
+                                              InvestmentCardText(
+                                                text: "$mon, $date",
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         SizedBox(width: 10),

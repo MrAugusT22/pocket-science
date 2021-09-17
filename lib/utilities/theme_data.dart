@@ -1,5 +1,6 @@
 import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyThemeData extends ChangeNotifier {
@@ -24,6 +25,23 @@ class MyThemeData extends ChangeNotifier {
   ];
 
   List<TransactionCard> _transactions = [];
+
+  String mon = '';
+  int date = 0;
+
+  List get getDate {
+    return [mon, date];
+  }
+
+  void formatDate(DateTime d) {
+    var format = DateFormat('MMM');
+    String date1 = format.format(d);
+    mon = date1;
+    var format2 = DateFormat('dd');
+    String date2 = format2.format(d);
+    int date3 = int.parse(date2);
+    date = date3;
+  }
 
   List get getPurchaseTypes {
     return _purchaseTypeList;

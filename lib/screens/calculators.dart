@@ -1,5 +1,4 @@
 import 'package:fin_calc/screens/cagr.dart';
-import 'package:fin_calc/screens/currency.dart';
 import 'package:fin_calc/screens/emi.dart';
 import 'package:fin_calc/screens/sip.dart';
 import 'package:fin_calc/utilities/constants.dart';

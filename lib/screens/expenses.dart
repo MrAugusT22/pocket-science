@@ -1,5 +1,6 @@
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/constants.dart';
+import 'package:fin_calc/utilities/dialogbox.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/theme_data.dart';
 import 'package:fin_calc/utilities/transaction_card.dart';
@@ -17,7 +18,6 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-
   late TextEditingController _textEditingController1;
   late TextEditingController _textEditingController2;
 
@@ -52,23 +52,61 @@ class _ExpensesState extends State<Expenses> {
       String mon = myThemeData.getDate[0];
       int date = myThemeData.getDate[1];
 
+      bool formComplete = false;
+
+      void cancelTransaction() {
+        myThemeData.updateCancel(true);
+      }
+
+      void addTransaction() {
+        myThemeData.updateCancel(false);
+      }
+
+      bool _transactionListEmpty = _transactionList.isEmpty;
+
       return Scaffold(
         extendBody: true,
         body: Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
           child: Stack(
             children: [
-              ListView.separated(
-                padding: EdgeInsets.only(bottom: 156, top: 30),
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 5);
-                },
-                physics: BouncingScrollPhysics(),
-                itemCount: count,
-                itemBuilder: (context, index) {
-                  return _transactionList[index];
-                },
-              ),
+              _transactionListEmpty
+                  ? Center(
+                      child: Icon(
+                        Icons.add_circle_outline_rounded,
+                        size: 120,
+                        color: _isDarkMode ? Colors.white12 : Colors.black26,
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: EdgeInsets.only(bottom: 156, top: 30),
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 5);
+                      },
+                      physics: BouncingScrollPhysics(),
+                      itemCount: count,
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                          key: UniqueKey(),
+                          confirmDismiss: (DismissDirection direction) async {
+                            return await ShowDialogBox(
+                              context: context,
+                              actionButtonText: 'DELETE',
+                              msg: 'Are you sure want to delete this message?',
+                              title: 'DELETE',
+                              delete: true,
+                              index: index,
+                            ).showDialogBox();
+                          },
+                          onDismissed: (direction) {
+                            setState(() {
+                              myThemeData.deleteTransaction(index);
+                            });
+                          },
+                          child: _transactionList[index],
+                        );
+                      },
+                    ),
               Positioned(
                 bottom: 70,
                 right: 0,
@@ -121,8 +159,13 @@ class _ExpensesState extends State<Expenses> {
                                       decoration: kTextFieldDecoration.copyWith(
                                           hintText: 'Title'),
                                       onChanged: (value) {
-                                        // newCommand = value;
-                                        setState(() {});
+                                        setState(() {
+                                          formComplete = _textEditingController1
+                                                  .text.isNotEmpty &&
+                                              _textEditingController2
+                                                  .text.isNotEmpty;
+                                          _title = value;
+                                        });
                                       },
                                     ),
                                     SizedBox(height: 10),
@@ -250,7 +293,14 @@ class _ExpensesState extends State<Expenses> {
                                                 .copyWith(hintText: 'Amt'),
                                             onChanged: (value) {
                                               // newCommand = value;
-                                              setState(() {});
+                                              setState(() {
+                                                formComplete =
+                                                    _textEditingController1
+                                                            .text.isNotEmpty &&
+                                                        _textEditingController2
+                                                            .text.isNotEmpty;
+                                                _amt = double.parse(value);
+                                              });
                                             },
                                           ),
                                         ),
@@ -258,8 +308,44 @@ class _ExpensesState extends State<Expenses> {
                                     ),
                                     SizedBox(height: 10),
                                     Button(
-                                      text: 'Add',
-                                    ),
+                                        text: 'Add',
+                                        onPressed: () async {
+                                          if (formComplete) {
+                                            ShowDialogBox showDialogBox =
+                                                ShowDialogBox(
+                                              context: context,
+                                              actionButtonText: 'ADD',
+                                              msg:
+                                                  'Are you sure want to add transaction?',
+                                              title: 'Confirm?',
+                                              delete: false,
+                                            );
+                                            await showDialogBox.showDialogBox();
+                                            if (!myThemeData.getCancelStatus) {
+                                              myThemeData.addTransactions(
+                                                TransactionCard(
+                                                  amt: _amt,
+                                                  mon: mon,
+                                                  date: date,
+                                                  debit:
+                                                      transactionType == 'Debit'
+                                                          ? true
+                                                          : false,
+                                                  title: _title,
+                                                  type: purchaseType,
+                                                ),
+                                              );
+                                              Navigator.pop(context);
+                                              _textEditingController1.clear();
+                                              _textEditingController2.clear();
+                                            }
+                                          }
+                                        },
+                                        color: formComplete
+                                            ? kMyColor
+                                            : _isDarkMode
+                                                ? kMyDarkBGColor
+                                                : kMyLightBGColor),
                                   ],
                                 ),
                               ),

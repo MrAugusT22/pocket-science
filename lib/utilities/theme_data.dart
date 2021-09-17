@@ -29,6 +29,22 @@ class MyThemeData extends ChangeNotifier {
   String mon = '';
   int date = 0;
 
+  bool cancel = true;
+
+  bool get getCancelStatus {
+    return cancel;
+  }
+
+  void updateCancel(bool value) {
+    cancel = value;
+    notifyListeners();
+  }
+
+  void deleteTransaction(int index) {
+    _transactions.removeAt(index);
+    notifyListeners();
+  }
+
   List get getDate {
     return [mon, date];
   }
@@ -58,6 +74,10 @@ class MyThemeData extends ChangeNotifier {
   void addTransactions(TransactionCard transactionCard) {
     _transactions.add(transactionCard);
     notifyListeners();
+  }
+
+  void cancelTransaction() {
+    _transactions.removeLast();
   }
 
   bool get getDarkMode {

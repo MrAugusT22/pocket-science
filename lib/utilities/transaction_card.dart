@@ -8,11 +8,13 @@ import 'package:provider/provider.dart';
 class TransactionCard extends StatefulWidget {
   final debit;
   final title;
+  final mon;
   final date;
   final amt;
   final type;
   TransactionCard({
     @required this.amt,
+    @required this.mon,
     @required this.date,
     @required this.debit,
     @required this.title,
@@ -25,9 +27,9 @@ class TransactionCard extends StatefulWidget {
 
 class _TransactionCardState extends State<TransactionCard> {
   Map _purchaseTypeList = {
-    1: {'icon': Icons.breakfast_dining_rounded, 'info': 'Food'},
-    2: {'icon': Icons.receipt_long_rounded, 'info': 'Bill'},
-    3: {'icon': Icons.sync_rounded, 'info': 'Self Transfer'},
+    'Food': Icons.breakfast_dining_rounded,
+    'Bill': Icons.receipt_long_rounded,
+    'Self Transfer': Icons.sync_rounded,
   };
 
   bool _expanded = false;
@@ -61,33 +63,46 @@ class _TransactionCardState extends State<TransactionCard> {
                     ],
                   ),
                   padding: EdgeInsets.all(10),
-                  child: Row(children: [
-                    Icon(
-                      _purchaseTypeList[widget.type]['icon'],
-                      size: 25,
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    children: [
+                      Column(
                         children: [
-                          InvestmentCardText(text: widget.title),
+                          InvestmentCardText(text: '${widget.mon}'),
                           InvestmentCardText(
                             text: '${widget.date}',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.normal,
                             color:
                                 _isDarkMode ? Colors.white60 : Colors.black54,
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    InvestmentCardText(
-                      text: '${widget.debit ? '-' : ''}₹${widget.amt}',
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ]),
+                      SizedBox(width: 10),
+                      Icon(
+                        _purchaseTypeList[widget.type],
+                        size: 30,
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InvestmentCardText(text: widget.title),
+                            InvestmentCardText(
+                              text: '${widget.type}',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.normal,
+                              color:
+                                  _isDarkMode ? Colors.white60 : Colors.black54,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      InvestmentCardText(
+                        text: '${widget.debit ? '-' : ''}₹${widget.amt}',
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

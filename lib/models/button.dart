@@ -38,7 +38,7 @@ class Button extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                color: Colors.white,
+                // color: Colors.white,
                 fontFamily: 'RobotoMono',
                 fontSize: textSize,
                 fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class Button extends StatelessWidget {
                 ? Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 30,
-                    color: Colors.white,
+                    // color: Colors.white,
                   )
                 : Container(),
           ],

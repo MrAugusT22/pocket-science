@@ -20,3 +20,19 @@ ThemeData kMyLightTheme = ThemeData.light();
 ThemeData kMyDarkTheme = ThemeData.dark().copyWith(
   scaffoldBackgroundColor: kMyDarkBGColor,
 );
+
+InputDecoration kTextFieldDecoration = InputDecoration(
+  hintStyle: TextStyle(fontFamily: "RobotoMono"),
+  hintText: '',
+  contentPadding: EdgeInsets.all(20),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.grey, width: 1),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.blue, width: 2),
+    borderRadius: BorderRadius.circular(20),
+  ),
+);
+
+const dateFormat = '';

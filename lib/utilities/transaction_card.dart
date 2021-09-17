@@ -9,13 +9,11 @@ import 'package:provider/provider.dart';
 class TransactionCard extends StatefulWidget {
   final debit;
   final title;
-  final bank;
   final date;
   final amt;
   final type;
   TransactionCard({
     @required this.amt,
-    @required this.bank,
     @required this.date,
     @required this.debit,
     @required this.title,
@@ -93,148 +91,10 @@ class _TransactionCardState extends State<TransactionCard> {
                   ]),
                 ),
               ),
-              _expanded ? Container(
-                child: AdditionalDataCard(
-                  title: widget.bank,
-                  elevation: 0.0,
-                  transaction: true,
-                ),
-              ) : Container(),
             ],
           ),
         ),
       );
     });
-  }
-}
-
-class Transactions {
-  List<TransactionCard> _transactionList = [
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 2,
-    ),
-    TransactionCard(
-      amt: 150,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: true,
-      type: 2,
-    ),
-    TransactionCard(
-      amt: 2000,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 2,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-    TransactionCard(
-      amt: 1500,
-      bank: 'SBI',
-      title: 'Net Banking',
-      date: '15 Sept 2021',
-      debit: false,
-      type: 3,
-    ),
-  ];
-
-  void addTransaction(double amt, String bank, String date, bool debit,
-      String title, int type) {
-    _transactionList.add(
-      TransactionCard(
-        amt: amt,
-        bank: bank,
-        date: date,
-        debit: debit,
-        title: title,
-        type: type,
-      ),
-    );
-  }
-
-  int get getTransactionListCount {
-    return _transactionList.length;
-  }
-
-  List<TransactionCard> get getTransactions {
-    return _transactionList;
   }
 }

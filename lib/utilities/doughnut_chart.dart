@@ -29,9 +29,11 @@ class DoughnutChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
+      Color kMyColor = myThemeData.getMyColor;
+
       return SfCircularChart(
         tooltipBehavior: _tooltipBehavior,
-        palette: [Colors.blue, _isDarkMode ? kMyLightBGColor : kMyDarkBGColor],
+        palette: [kMyColor, _isDarkMode ? kMyLightBGColor : kMyDarkBGColor],
         annotations: [
           CircularChartAnnotation(
             widget: InvestmentCardText(text: '₹ $res'),

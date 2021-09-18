@@ -76,6 +76,8 @@ class _SipState extends State<Sip> {
   Widget build(BuildContext context) {
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
+      Color kMyColor = myThemeData.getMyColor;
+
       return Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -88,7 +90,8 @@ class _SipState extends State<Sip> {
               child: Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20), color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
+                    borderRadius: BorderRadius.circular(20),
+                    color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
                 child: Column(
                   children: [
                     Row(
@@ -107,7 +110,9 @@ class _SipState extends State<Sip> {
                             center: true,
                             color: selectedMode == Mode.sip
                                 ? kMyColor
-                                : kMyDarkBGColor,
+                                : _isDarkMode
+                                    ? kMyDarkBGColor
+                                    : kMyLightBGColor,
                           ),
                         ),
                         SizedBox(width: 10),
@@ -125,7 +130,9 @@ class _SipState extends State<Sip> {
                             center: true,
                             color: selectedMode == Mode.cagr
                                 ? kMyColor
-                                : kMyDarkBGColor,
+                                : _isDarkMode
+                                    ? kMyDarkBGColor
+                                    : kMyLightBGColor,
                           ),
                         ),
                       ],
@@ -146,13 +153,17 @@ class _SipState extends State<Sip> {
                     //Monthly SIP
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: kMyColor,
-                          inactiveTrackColor: _isDarkMode ? Colors.white12 : Colors.black54,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 4.0,
-                          activeTickMarkColor: Colors.transparent,
-                          inactiveTickMarkColor: Colors.transparent,
-                          valueIndicatorColor: Colors.blue),
+                        activeTrackColor: kMyColor,
+                        inactiveTrackColor:
+                            _isDarkMode ? Colors.white12 : Colors.black54,
+                        trackShape: RoundedRectSliderTrackShape(),
+                        trackHeight: 4.0,
+                        activeTickMarkColor: Colors.transparent,
+                        inactiveTickMarkColor: Colors.transparent,
+                        valueIndicatorColor: kMyColor,
+                        thumbColor: kMyColor,
+                        overlayColor: kMyColor.withAlpha(32),
+                      ),
                       child: Slider(
                         label: '${p.toInt()}',
                         divisions: 399,
@@ -184,13 +195,17 @@ class _SipState extends State<Sip> {
                     //Expected Returns
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: kMyColor,
-                          inactiveTrackColor: _isDarkMode ? Colors.white12 : Colors.black54,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 4.0,
-                          activeTickMarkColor: Colors.transparent,
-                          inactiveTickMarkColor: Colors.transparent,
-                          valueIndicatorColor: Colors.blue),
+                        activeTrackColor: kMyColor,
+                        inactiveTrackColor:
+                            _isDarkMode ? Colors.white12 : Colors.black54,
+                        trackShape: RoundedRectSliderTrackShape(),
+                        trackHeight: 4.0,
+                        activeTickMarkColor: Colors.transparent,
+                        inactiveTickMarkColor: Colors.transparent,
+                        valueIndicatorColor: kMyColor,
+                        thumbColor: kMyColor,
+                        overlayColor: kMyColor.withAlpha(32),
+                      ),
                       child: Slider(
                         label: '${r.toInt()}',
                         divisions: 29,
@@ -222,13 +237,17 @@ class _SipState extends State<Sip> {
                     //Time Period
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: kMyColor,
-                          inactiveTrackColor: _isDarkMode ? Colors.white12 : Colors.black54,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 4.0,
-                          activeTickMarkColor: Colors.transparent,
-                          inactiveTickMarkColor: Colors.transparent,
-                          valueIndicatorColor: Colors.blue),
+                        activeTrackColor: kMyColor,
+                        inactiveTrackColor:
+                            _isDarkMode ? Colors.white12 : Colors.black54,
+                        trackShape: RoundedRectSliderTrackShape(),
+                        trackHeight: 4.0,
+                        activeTickMarkColor: Colors.transparent,
+                        inactiveTickMarkColor: Colors.transparent,
+                        valueIndicatorColor: kMyColor,
+                        thumbColor: kMyColor,
+                        overlayColor: kMyColor.withAlpha(32),
+                      ),
                       child: Slider(
                         label: '${t.toInt()}',
                         divisions: 29,

@@ -69,6 +69,8 @@ class _CagrState extends State<Cagr> {
   Widget build(BuildContext context) {
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
+      Color kMyColor = myThemeData.getMyColor;
+      
       return Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -101,7 +103,9 @@ class _CagrState extends State<Cagr> {
                             center: true,
                             color: selectedMode == Mode.cagr
                                 ? kMyColor
-                                : kMyDarkBGColor,
+                                : _isDarkMode
+                                    ? kMyDarkBGColor
+                                    : kMyLightBGColor,
                           ),
                         ),
                         SizedBox(width: 10),
@@ -119,7 +123,9 @@ class _CagrState extends State<Cagr> {
                             center: true,
                             color: selectedMode == Mode.total
                                 ? kMyColor
-                                : kMyDarkBGColor,
+                                : _isDarkMode
+                                    ? kMyDarkBGColor
+                                    : kMyLightBGColor,
                           ),
                         ),
                       ],

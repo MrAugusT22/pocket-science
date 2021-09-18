@@ -60,6 +60,8 @@ class _EmiState extends State<Emi> {
   Widget build(BuildContext context) {
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
+      Color kMyColor = myThemeData.getMyColor;
+
       return Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -90,13 +92,16 @@ class _EmiState extends State<Emi> {
                     //Monthly SIP
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: kMyColor,
-                          inactiveTrackColor:
-                              _isDarkMode ? Colors.white12 : Colors.black54,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 4.0,
-                          inactiveTickMarkColor: Colors.transparent,
-                          valueIndicatorColor: Colors.blue),
+                        activeTrackColor: kMyColor,
+                        inactiveTrackColor:
+                            _isDarkMode ? Colors.white12 : Colors.black54,
+                        trackShape: RoundedRectSliderTrackShape(),
+                        trackHeight: 4.0,
+                        inactiveTickMarkColor: Colors.transparent,
+                        valueIndicatorColor: kMyColor,
+                        thumbColor: kMyColor,
+                        overlayColor: kMyColor.withAlpha(32),
+                      ),
                       child: Slider(
                         label: '${p.toInt()}',
                         divisions: 199,
@@ -128,13 +133,16 @@ class _EmiState extends State<Emi> {
                     //Expected interest
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: kMyColor,
-                          inactiveTrackColor:
-                              _isDarkMode ? Colors.white12 : Colors.black54,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 4.0,
-                          inactiveTickMarkColor: Colors.transparent,
-                          valueIndicatorColor: Colors.blue),
+                        activeTrackColor: kMyColor,
+                        inactiveTrackColor:
+                            _isDarkMode ? Colors.white12 : Colors.black54,
+                        trackShape: RoundedRectSliderTrackShape(),
+                        trackHeight: 4.0,
+                        inactiveTickMarkColor: Colors.transparent,
+                        valueIndicatorColor: kMyColor,
+                        thumbColor: kMyColor,
+                        overlayColor: kMyColor.withAlpha(32),
+                      ),
                       child: Slider(
                         label: '$r',
                         divisions: 60,
@@ -166,14 +174,17 @@ class _EmiState extends State<Emi> {
                     //Time Period
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: kMyColor,
-                          inactiveTrackColor:
-                              _isDarkMode ? Colors.white12 : Colors.black54,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 4.0,
-                          activeTickMarkColor: Colors.transparent,
-                          inactiveTickMarkColor: Colors.transparent,
-                          valueIndicatorColor: Colors.blue),
+                        activeTrackColor: kMyColor,
+                        inactiveTrackColor:
+                            _isDarkMode ? Colors.white12 : Colors.black54,
+                        trackShape: RoundedRectSliderTrackShape(),
+                        trackHeight: 4.0,
+                        activeTickMarkColor: Colors.transparent,
+                        inactiveTickMarkColor: Colors.transparent,
+                        valueIndicatorColor: kMyColor,
+                        thumbColor: kMyColor,
+                        overlayColor: kMyColor.withAlpha(32),
+                      ),
                       child: Slider(
                         label: '${t.toInt()}',
                         divisions: 29,

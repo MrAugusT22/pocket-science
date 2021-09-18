@@ -31,6 +31,17 @@ class MyThemeData extends ChangeNotifier {
 
   bool cancel = true;
 
+  Color kMyColor = Colors.blue;
+
+  Color get getMyColor {
+    return kMyColor;
+  }
+
+  void updateMyColor(Color color) {
+    kMyColor = color;
+    notifyListeners();
+  }
+
   bool get getCancelStatus {
     return cancel;
   }

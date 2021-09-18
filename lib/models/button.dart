@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fin_calc/utilities/constants.dart';
 
 class Button extends StatelessWidget {
   final text;
@@ -8,13 +7,14 @@ class Button extends StatelessWidget {
   final textSize;
   final center;
   final color;
+  
   Button({
     this.text,
     this.onPressed,
     this.arrow = true,
     this.textSize = 30.0,
     this.center = false,
-    this.color = kMyColor,
+    this.color,
   });
 
   @override

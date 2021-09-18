@@ -54,15 +54,8 @@ class _ExpensesState extends State<Expenses> {
 
       bool formComplete = false;
 
-      void cancelTransaction() {
-        myThemeData.updateCancel(true);
-      }
-
-      void addTransaction() {
-        myThemeData.updateCancel(false);
-      }
-
       bool _transactionListEmpty = _transactionList.isEmpty;
+      Color kMyColor = myThemeData.getMyColor;
 
       return Scaffold(
         extendBody: true,

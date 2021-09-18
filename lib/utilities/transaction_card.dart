@@ -32,8 +32,6 @@ class _TransactionCardState extends State<TransactionCard> {
     'Self Transfer': Icons.sync_rounded,
   };
 
-  bool _expanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
@@ -43,69 +41,69 @@ class _TransactionCardState extends State<TransactionCard> {
         child: Material(
           elevation: 5,
           borderRadius: BorderRadius.circular(20),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: widget.debit ? Colors.red : Colors.green,
-                        spreadRadius: 2,
-                      ),
-                    ],
+          child: Container(
+            decoration: BoxDecoration(
+              color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: widget.debit ? Colors.red : Colors.green,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    InvestmentCardText(text: '${widget.mon}'),
+                    InvestmentCardText(
+                      text: '${widget.date}',
+                      color:
+                          _isDarkMode ? Colors.white60 : Colors.black54,
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10),
+                Container(
+                    constraints: BoxConstraints.tightFor(
+                      height: 30,
+                      width: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _isDarkMode ? Colors.white12 : Colors.black26,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
-                  padding: EdgeInsets.all(10),
-                  child: Row(
+                SizedBox(width: 10),
+                Icon(
+                  _purchaseTypeList[widget.type],
+                  size: 30,
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          InvestmentCardText(text: '${widget.mon}'),
-                          InvestmentCardText(
-                            text: '${widget.date}',
-                            color:
-                                _isDarkMode ? Colors.white60 : Colors.black54,
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Icon(
-                        _purchaseTypeList[widget.type],
-                        size: 30,
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InvestmentCardText(text: widget.title),
-                            InvestmentCardText(
-                              text: '${widget.type}',
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.normal,
-                              color:
-                                  _isDarkMode ? Colors.white60 : Colors.black54,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 10),
+                      InvestmentCardText(text: widget.title),
                       InvestmentCardText(
-                        text: '${widget.debit ? '-' : ''}₹${widget.amt}',
+                        text: '${widget.type}',
                         fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.normal,
+                        color:
+                            _isDarkMode ? Colors.white60 : Colors.black54,
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                SizedBox(width: 10),
+                InvestmentCardText(
+                  text: '${widget.debit ? '-' : ''}₹${widget.amt}',
+                  fontStyle: FontStyle.italic,
+                ),
+              ],
+            ),
           ),
         ),
       );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const kMyAppName = 'Wealthy Me';
+const kMyImage = 'images/pig.jpg';
+
 const kMyGradient = LinearGradient(
   colors: [Colors.blue, Color(0xFF1A39D2)],
   begin: Alignment.topLeft,

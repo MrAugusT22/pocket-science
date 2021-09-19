@@ -3,7 +3,6 @@ import 'package:fin_calc/utilities/theme_data.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
-import 'package:fin_calc/utilities/investment_card_text.dart';
 
 class InvestmentData {
   final amtType;

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "943275428584",
+    "project_id": "my-finance-calc",
+    "storage_bucket": "my-finance-calc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943275428584:android:0336e647b08edfa2fe175d",
+        "android_client_info": {
+          "package_name": "com.sahil_shetye.fin_calc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943275428584-u80rvq1f84o01dej691tm8pu7u1drohl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0OysV3tAFtEUxqiNXJLE3vaXFi7bwCzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943275428584-u80rvq1f84o01dej691tm8pu7u1drohl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

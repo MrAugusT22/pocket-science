@@ -88,10 +88,7 @@ class _ExpensesState extends State<Expenses> {
                             color: Colors.red,
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(10.0, 0.0, 0, 0.0),
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.white
-                              ),
+                              child: Icon(Icons.delete, color: Colors.white),
                             ),
                           ),
                           secondaryBackground: Container(
@@ -99,21 +96,25 @@ class _ExpensesState extends State<Expenses> {
                             color: Colors.green,
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                              child: Icon(
-                                Icons.star_rounded,
-                                color: Colors.white
-                              ),
+                              child:
+                                  Icon(Icons.star_rounded, color: Colors.white),
                             ),
                           ),
                           confirmDismiss: (DismissDirection direction) async {
                             return await ShowDialogBox(
-                              context: context,
-                              actionButtonText: 'Delete',
-                              msg: 'Are you sure want to delete this message?',
-                              title: 'Delete',
-                              delete: true,
-                              index: index,
-                            ).showDialogBox();
+                                context: context,
+                                actionButtonText: 'Delete',
+                                msg:
+                                    'Are you sure want to delete this message?',
+                                title: 'Delete',
+                                delete: true,
+                                index: index,
+                                onPressed: () {
+                                  Provider.of<MyThemeData>(context,
+                                          listen: false)
+                                      .deleteTransaction(index);
+                                  Navigator.of(context).pop();
+                                }).showDialogBox();
                           },
                           onDismissed: (direction) {
                             setState(() {
@@ -331,13 +332,19 @@ class _ExpensesState extends State<Expenses> {
                                         if (formComplete) {
                                           ShowDialogBox showDialogBox =
                                               ShowDialogBox(
-                                            context: context,
-                                            actionButtonText: 'Add',
-                                            msg:
-                                                'Are you sure want to add transaction?',
-                                            title: 'Confirm?',
-                                            delete: false,
-                                          );
+                                                  context: context,
+                                                  actionButtonText: 'Add',
+                                                  msg:
+                                                      'Are you sure want to add transaction?',
+                                                  title: 'Confirm?',
+                                                  delete: false,
+                                                  onPressed: () {
+                                                    Provider.of<MyThemeData>(
+                                                            context,
+                                                            listen: false)
+                                                        .updateCancel(false);
+                                                    Navigator.of(context).pop();
+                                                  });
                                           await showDialogBox.showDialogBox();
                                           if (!myThemeData.getCancelStatus) {
                                             myThemeData.addTransactions(

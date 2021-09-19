@@ -11,6 +11,7 @@ class ShowDialogBox {
   final actionButtonText;
   final delete;
   final index;
+  final onPressed;
 
   ShowDialogBox({
     @required this.context,
@@ -19,6 +20,7 @@ class ShowDialogBox {
     @required this.title,
     @required this.delete,
     this.index = 0,
+    @required this.onPressed,
   });
 
   Future showDialogBox() async {
@@ -51,15 +53,9 @@ class ShowDialogBox {
           actions: <Widget>[
             //Add
             TextButton(
-              onPressed: () {
-                delete
-                    ? Provider.of<MyThemeData>(context, listen: false)
-                        .deleteTransaction(index)
-                    : Provider.of<MyThemeData>(context, listen: false)
-                        .updateCancel(false);
-                Navigator.of(context).pop();
-              },
-              child: InvestmentCardText(text: '$actionButtonText', color: kMyColor),
+              onPressed: onPressed,
+              child: InvestmentCardText(
+                  text: '$actionButtonText', color: kMyColor),
             ),
             //Cancel
             TextButton(

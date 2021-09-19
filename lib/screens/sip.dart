@@ -274,9 +274,6 @@ class _SipState extends State<Sip> {
                         CircularChartAnnotation(
                           widget: InvestmentCardText(text: '₹ $res'),
                         ),
-                        CircularChartAnnotation(
-                          widget: InvestmentCardText(text: 'hii'),
-                        ),
                       ],
                     )
                   ],

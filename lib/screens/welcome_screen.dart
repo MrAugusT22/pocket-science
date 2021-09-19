@@ -141,9 +141,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         SizedBox(height: 10),
                         TextField(
+                          autofocus: true,
                           style: TextStyle(fontSize: 20),
                           controller: _textEditingController1,
-                          maxLines: null,
                           keyboardType: TextInputType.emailAddress,
                           decoration:
                               kTextFieldDecoration.copyWith(hintText: 'Email'),
@@ -185,6 +185,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   if (formComplete) {
                                     _textEditingController1.clear();
                                     _textEditingController2.clear();
+                                    Navigator.pop(context);
                                     signUp();
                                   }
                                 },
@@ -204,6 +205,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   if (formComplete) {
                                     _textEditingController1.clear();
                                     _textEditingController2.clear();
+                                    Navigator.pop(context);
                                     signIn();
                                   }
                                 },

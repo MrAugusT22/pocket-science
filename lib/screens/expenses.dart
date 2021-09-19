@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/dialogbox.dart';
@@ -18,6 +19,8 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
+  final firestore = FirebaseFirestore.instance;
+
   late TextEditingController _textEditingController1;
   late TextEditingController _textEditingController2;
 
@@ -58,6 +61,244 @@ class _ExpensesState extends State<Expenses> {
       Color kMyColor = myThemeData.getMyColor;
 
       InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
+
+      void addTransaction() async {
+        if (formComplete) {
+          ShowDialogBox showDialogBox = ShowDialogBox(
+              context: context,
+              actionButtonText: 'Add',
+              msg: 'Are you sure want to add transaction?',
+              title: 'Confirm?',
+              delete: false,
+              onPressed: () {
+                Provider.of<MyThemeData>(context, listen: false)
+                    .updateCancel(false);
+                Navigator.of(context).pop();
+              });
+          await showDialogBox.showDialogBox();
+          if (!myThemeData.getCancelStatus) {
+            myThemeData.addTransactions(
+              TransactionCard(
+                amt: _amt,
+                mon: mon,
+                date: date,
+                debit: transactionType == 'Debit' ? true : false,
+                title: _title,
+                type: purchaseType,
+              ),
+            );
+            firestore.collection('transactions').add({
+              'amt': _amt,
+              'title': _title,
+              'debit': transactionType == 'Debit' ? true : false,
+              'purchaseType': purchaseType,
+              'date': selectedDate,
+            });
+            Navigator.pop(context);
+            _textEditingController1.clear();
+            _textEditingController2.clear();
+          }
+        }
+      }
+
+      void onAddTap() {
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => StatefulBuilder(
+            builder: (context, setState) {
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(30),
+                            topLeft: Radius.circular(30)),
+                        color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Center(
+                          child: InvestmentCardText(
+                            text: 'Add Transaction',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          style: TextStyle(fontSize: 20),
+                          textCapitalization: TextCapitalization.sentences,
+                          controller: _textEditingController1,
+                          maxLines: null,
+                          decoration:
+                              kTextFieldDecoration.copyWith(hintText: 'Title'),
+                          onChanged: (value) {
+                            setState(() {
+                              formComplete =
+                                  _textEditingController1.text.isNotEmpty &&
+                                      _textEditingController2.text.isNotEmpty;
+                              _title = value;
+                              print(value);
+                            });
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                value: purchaseType,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 16,
+                                style: TextStyle(
+                                  fontFamily: 'RobotoMono',
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal,
+                                  color: _isDarkMode
+                                      ? kMyLightBGColor
+                                      : kMyDarkBGColor,
+                                ),
+                                underline: Container(
+                                  height: 2,
+                                  color: kMyColor,
+                                ),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    purchaseType = newValue!;
+                                    print(newValue);
+                                  });
+                                },
+                                items: _purchaseTypes
+                                    .map<DropdownMenuItem<String>>((value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                value: transactionType,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 16,
+                                style: TextStyle(
+                                  fontFamily: 'RobotoMono',
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal,
+                                  color: _isDarkMode
+                                      ? kMyLightBGColor
+                                      : kMyDarkBGColor,
+                                ),
+                                underline: Container(
+                                  height: 2,
+                                  color: kMyColor,
+                                ),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    transactionType = newValue!;
+                                  });
+                                },
+                                items: _transactionTypes
+                                    .map<DropdownMenuItem<String>>((value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                final DateTime? picked = await showDatePicker(
+                                    context: context,
+                                    initialDate: selectedDate,
+                                    firstDate: DateTime(2015, 8),
+                                    lastDate: DateTime(2101));
+                                if (picked != null && picked != selectedDate)
+                                  setState(() {
+                                    selectedDate = picked;
+                                    myThemeData.formatDate(selectedDate);
+                                    mon = myThemeData.getDate[0];
+                                    date = myThemeData.getDate[1];
+                                  });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.calendar_today_rounded),
+                                  SizedBox(width: 10),
+                                  InvestmentCardText(
+                                    text: "$mon, $date",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: TextField(
+                                keyboardType: TextInputType.numberWithOptions(),
+                                style: TextStyle(fontSize: 20),
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                controller: _textEditingController2,
+                                maxLines: null,
+                                decoration: kTextFieldDecoration.copyWith(
+                                    hintText: 'Amt'),
+                                onChanged: (value) {
+                                  // newCommand = value;
+                                  setState(() {
+                                    formComplete = _textEditingController1
+                                            .text.isNotEmpty &&
+                                        _textEditingController2.text.isNotEmpty;
+                                    _amt = double.parse(value);
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Button(
+                          text: 'Add',
+                          onPressed: () {
+                            addTransaction();
+                          },
+                          color: formComplete
+                              ? kMyColor
+                              : _isDarkMode
+                                  ? kMyDarkBGColor
+                                  : kMyLightBGColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      }
 
       return Scaffold(
         extendBody: true,
@@ -130,256 +371,7 @@ class _ExpensesState extends State<Expenses> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
-                    showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30))),
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => StatefulBuilder(
-                        builder: (context, setState) {
-                          return SingleChildScrollView(
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom,
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(30),
-                                        topLeft: Radius.circular(30)),
-                                    color: _isDarkMode
-                                        ? kMyDarkBGColor
-                                        : kMyLightBGColor),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Center(
-                                      child: InvestmentCardText(
-                                        text: 'Add Transaction',
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    TextField(
-                                      style: TextStyle(fontSize: 20),
-                                      textCapitalization:
-                                          TextCapitalization.sentences,
-                                      controller: _textEditingController1,
-                                      maxLines: null,
-                                      decoration: kTextFieldDecoration.copyWith(
-                                          hintText: 'Title'),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          formComplete = _textEditingController1
-                                                  .text.isNotEmpty &&
-                                              _textEditingController2
-                                                  .text.isNotEmpty;
-                                          _title = value;
-                                          print(value);
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: DropdownButton<String>(
-                                            isExpanded: true,
-                                            value: purchaseType,
-                                            icon: const Icon(
-                                                Icons.arrow_downward),
-                                            iconSize: 24,
-                                            elevation: 16,
-                                            style: TextStyle(
-                                              fontFamily: 'RobotoMono',
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.normal,
-                                              color: _isDarkMode
-                                                  ? kMyLightBGColor
-                                                  : kMyDarkBGColor,
-                                            ),
-                                            underline: Container(
-                                              height: 2,
-                                              color: kMyColor,
-                                            ),
-                                            onChanged: (newValue) {
-                                              setState(() {
-                                                purchaseType = newValue!;
-                                                print(newValue);
-                                              });
-                                            },
-                                            items: _purchaseTypes
-                                                .map<DropdownMenuItem<String>>(
-                                                    (value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Expanded(
-                                          child: DropdownButton<String>(
-                                            isExpanded: true,
-                                            value: transactionType,
-                                            icon: const Icon(
-                                                Icons.arrow_downward),
-                                            iconSize: 24,
-                                            elevation: 16,
-                                            style: TextStyle(
-                                              fontFamily: 'RobotoMono',
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.normal,
-                                              color: _isDarkMode
-                                                  ? kMyLightBGColor
-                                                  : kMyDarkBGColor,
-                                            ),
-                                            underline: Container(
-                                              height: 2,
-                                              color: kMyColor,
-                                            ),
-                                            onChanged: (newValue) {
-                                              setState(() {
-                                                transactionType = newValue!;
-                                              });
-                                            },
-                                            items: _transactionTypes
-                                                .map<DropdownMenuItem<String>>(
-                                                    (value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () async {
-                                            final DateTime? picked =
-                                                await showDatePicker(
-                                                    context: context,
-                                                    initialDate: selectedDate,
-                                                    firstDate:
-                                                        DateTime(2015, 8),
-                                                    lastDate: DateTime(2101));
-                                            if (picked != null &&
-                                                picked != selectedDate)
-                                              setState(() {
-                                                selectedDate = picked;
-                                                myThemeData
-                                                    .formatDate(selectedDate);
-                                                mon = myThemeData.getDate[0];
-                                                date = myThemeData.getDate[1];
-                                              });
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                  Icons.calendar_today_rounded),
-                                              SizedBox(width: 10),
-                                              InvestmentCardText(
-                                                text: "$mon, $date",
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Expanded(
-                                          child: TextField(
-                                            keyboardType: TextInputType
-                                                .numberWithOptions(),
-                                            style: TextStyle(fontSize: 20),
-                                            textCapitalization:
-                                                TextCapitalization.sentences,
-                                            controller: _textEditingController2,
-                                            maxLines: null,
-                                            decoration: kTextFieldDecoration
-                                                .copyWith(hintText: 'Amt'),
-                                            onChanged: (value) {
-                                              // newCommand = value;
-                                              setState(() {
-                                                formComplete =
-                                                    _textEditingController1
-                                                            .text.isNotEmpty &&
-                                                        _textEditingController2
-                                                            .text.isNotEmpty;
-                                                _amt = double.parse(value);
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Button(
-                                      text: 'Add',
-                                      onPressed: () async {
-                                        if (formComplete) {
-                                          ShowDialogBox showDialogBox =
-                                              ShowDialogBox(
-                                                  context: context,
-                                                  actionButtonText: 'Add',
-                                                  msg:
-                                                      'Are you sure want to add transaction?',
-                                                  title: 'Confirm?',
-                                                  delete: false,
-                                                  onPressed: () {
-                                                    Provider.of<MyThemeData>(
-                                                            context,
-                                                            listen: false)
-                                                        .updateCancel(false);
-                                                    Navigator.of(context).pop();
-                                                  });
-                                          await showDialogBox.showDialogBox();
-                                          if (!myThemeData.getCancelStatus) {
-                                            myThemeData.addTransactions(
-                                              TransactionCard(
-                                                amt: _amt,
-                                                mon: mon,
-                                                date: date,
-                                                debit:
-                                                    transactionType == 'Debit'
-                                                        ? true
-                                                        : false,
-                                                title: _title,
-                                                type: purchaseType,
-                                              ),
-                                            );
-                                            Navigator.pop(context);
-                                            _textEditingController1.clear();
-                                            _textEditingController2.clear();
-                                          }
-                                        }
-                                      },
-                                      color: formComplete
-                                          ? kMyColor
-                                          : _isDarkMode
-                                              ? kMyDarkBGColor
-                                              : kMyLightBGColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
+                    onAddTap();
                   },
                   child: Material(
                     elevation: 5,

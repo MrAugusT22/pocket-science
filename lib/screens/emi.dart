@@ -205,9 +205,18 @@ class _EmiState extends State<Emi> {
                     InvestmentCardText(text: 'EMI: ₹ $emi1'),
                     SizedBox(height: 10),
                     DoughnutChart(
-                        tooltipBehavior: _tooltipBehavior,
-                        res: totAmt,
-                        chartData: _chartData)
+                      tooltipBehavior: _tooltipBehavior,
+                      res: totAmt,
+                      chartData: _chartData,
+                      centerTexts: [
+                        CircularChartAnnotation(
+                          widget: InvestmentCardText(text: '₹ $totAmt'),
+                        ),
+                        CircularChartAnnotation(
+                          widget: InvestmentCardText(text: '₹ $totAmt'),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

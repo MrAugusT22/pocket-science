@@ -1,7 +1,6 @@
 import 'package:fin_calc/screens/cagr.dart';
 import 'package:fin_calc/screens/emi.dart';
 import 'package:fin_calc/screens/sip.dart';
-import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';

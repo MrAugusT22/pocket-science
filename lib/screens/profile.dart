@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 class Profile extends StatefulWidget {
   static const String id = 'profile';
@@ -144,10 +143,10 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       child: Material(
                         elevation: 5,
                         shape: CircleBorder(),
-                        color: Colors.transparent,
+                        color: Colors.white,
                         child: CircleAvatar(
                           radius: 95,
-                          backgroundColor: Colors.white,
+                          backgroundColor: Colors.transparent,
                         ),
                       ),
                     ),

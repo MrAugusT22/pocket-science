@@ -15,6 +15,10 @@ class MyThemeData extends ChangeNotifier {
 
   List _purchaseTypeList = [
     'Food',
+    'Travel',
+    'Medicine',
+    'Housing',
+    'Personal',
     'Bill',
     'Self Transfer',
   ];
@@ -32,6 +36,23 @@ class MyThemeData extends ChangeNotifier {
   bool cancel = true;
 
   Color kMyColor = Colors.blue;
+
+  InputDecoration get getTextFieldDecoration {
+    return InputDecoration(
+      hintStyle: TextStyle(fontFamily: "RobotoMono"),
+      hintText: '',
+      contentPadding: EdgeInsets.all(20),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+            color: kMyColor, width: 2),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+  }
 
   Color get getMyColor {
     return kMyColor;

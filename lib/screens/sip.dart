@@ -267,9 +267,18 @@ class _SipState extends State<Sip> {
                     ),
                     SizedBox(height: 10),
                     DoughnutChart(
-                        tooltipBehavior: _tooltipBehavior,
-                        res: res,
-                        chartData: _chartData)
+                      tooltipBehavior: _tooltipBehavior,
+                      res: res,
+                      chartData: _chartData,
+                      centerTexts: [
+                        CircularChartAnnotation(
+                          widget: InvestmentCardText(text: '₹ $res'),
+                        ),
+                        CircularChartAnnotation(
+                          widget: InvestmentCardText(text: 'hii'),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

@@ -27,7 +27,11 @@ class TransactionCard extends StatefulWidget {
 
 class _TransactionCardState extends State<TransactionCard> {
   Map _purchaseTypeList = {
-    'Food': Icons.breakfast_dining_rounded,
+    'Food': Icons.lunch_dining_rounded,
+    'Travel': Icons.drive_eta_rounded,
+    'Medicine': Icons.medical_services_rounded,
+    'Housing': Icons.home_rounded,
+    'Personal': Icons.checkroom_rounded,
     'Bill': Icons.receipt_long_rounded,
     'Self Transfer': Icons.sync_rounded,
   };

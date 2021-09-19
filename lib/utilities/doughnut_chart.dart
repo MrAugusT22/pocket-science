@@ -12,18 +12,17 @@ class InvestmentData {
 }
 
 class DoughnutChart extends StatelessWidget {
-  const DoughnutChart({
-    Key? key,
-    required TooltipBehavior tooltipBehavior,
-    required this.res,
-    required List<InvestmentData> chartData,
-  })  : _tooltipBehavior = tooltipBehavior,
-        _chartData = chartData,
-        super(key: key);
+  DoughnutChart({
+    this.chartData,
+    this.tooltipBehavior,
+    this.res,
+    this.centerTexts
+  });
 
-  final TooltipBehavior _tooltipBehavior;
-  final String res;
-  final List<InvestmentData> _chartData;
+  final tooltipBehavior;
+  final res;
+  final chartData;
+  final centerTexts;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +31,9 @@ class DoughnutChart extends StatelessWidget {
       Color kMyColor = myThemeData.getMyColor;
 
       return SfCircularChart(
-        tooltipBehavior: _tooltipBehavior,
+        tooltipBehavior: tooltipBehavior,
         palette: [kMyColor, _isDarkMode ? kMyLightBGColor : kMyDarkBGColor],
-        annotations: [
-          CircularChartAnnotation(
-            widget: InvestmentCardText(text: '₹ $res'),
-          )
-        ],
+        annotations: centerTexts,
         legend: Legend(
           isVisible: true,
           overflowMode: LegendItemOverflowMode.wrap,
@@ -52,7 +47,7 @@ class DoughnutChart extends StatelessWidget {
         ),
         series: [
           DoughnutSeries<InvestmentData, String>(
-            dataSource: _chartData,
+            dataSource: chartData,
             xValueMapper: (InvestmentData data, _) => data.amtType,
             yValueMapper: (InvestmentData data, _) => data.amt,
             enableTooltip: true,

@@ -57,6 +57,8 @@ class _ExpensesState extends State<Expenses> {
       bool _transactionListEmpty = _transactionList.isEmpty;
       Color kMyColor = myThemeData.getMyColor;
 
+      InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
+
       return Scaffold(
         extendBody: true,
         body: Padding(
@@ -81,12 +83,34 @@ class _ExpensesState extends State<Expenses> {
                       itemBuilder: (context, index) {
                         return Dismissible(
                           key: UniqueKey(),
+                          background: Container(
+                            alignment: AlignmentDirectional.centerStart,
+                            color: Colors.red,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10.0, 0.0, 0, 0.0),
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white
+                              ),
+                            ),
+                          ),
+                          secondaryBackground: Container(
+                            alignment: AlignmentDirectional.centerEnd,
+                            color: Colors.green,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                              child: Icon(
+                                Icons.star_rounded,
+                                color: Colors.white
+                              ),
+                            ),
+                          ),
                           confirmDismiss: (DismissDirection direction) async {
                             return await ShowDialogBox(
                               context: context,
-                              actionButtonText: 'DELETE',
+                              actionButtonText: 'Delete',
                               msg: 'Are you sure want to delete this message?',
-                              title: 'DELETE',
+                              title: 'Delete',
                               delete: true,
                               index: index,
                             ).showDialogBox();
@@ -134,13 +158,12 @@ class _ExpensesState extends State<Expenses> {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    Text(
-                                      'Add Transaction',
-                                      style: TextStyle(
-                                          fontFamily: 'RobotoMono',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 30),
-                                      textAlign: TextAlign.center,
+                                    Center(
+                                      child: InvestmentCardText(
+                                        text: 'Add Transaction',
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -158,6 +181,7 @@ class _ExpensesState extends State<Expenses> {
                                               _textEditingController2
                                                   .text.isNotEmpty;
                                           _title = value;
+                                          print(value);
                                         });
                                       },
                                     ),
@@ -188,6 +212,7 @@ class _ExpensesState extends State<Expenses> {
                                             onChanged: (newValue) {
                                               setState(() {
                                                 purchaseType = newValue!;
+                                                print(newValue);
                                               });
                                             },
                                             items: _purchaseTypes
@@ -301,44 +326,45 @@ class _ExpensesState extends State<Expenses> {
                                     ),
                                     SizedBox(height: 10),
                                     Button(
-                                        text: 'Add',
-                                        onPressed: () async {
-                                          if (formComplete) {
-                                            ShowDialogBox showDialogBox =
-                                                ShowDialogBox(
-                                              context: context,
-                                              actionButtonText: 'ADD',
-                                              msg:
-                                                  'Are you sure want to add transaction?',
-                                              title: 'Confirm?',
-                                              delete: false,
+                                      text: 'Add',
+                                      onPressed: () async {
+                                        if (formComplete) {
+                                          ShowDialogBox showDialogBox =
+                                              ShowDialogBox(
+                                            context: context,
+                                            actionButtonText: 'Add',
+                                            msg:
+                                                'Are you sure want to add transaction?',
+                                            title: 'Confirm?',
+                                            delete: false,
+                                          );
+                                          await showDialogBox.showDialogBox();
+                                          if (!myThemeData.getCancelStatus) {
+                                            myThemeData.addTransactions(
+                                              TransactionCard(
+                                                amt: _amt,
+                                                mon: mon,
+                                                date: date,
+                                                debit:
+                                                    transactionType == 'Debit'
+                                                        ? true
+                                                        : false,
+                                                title: _title,
+                                                type: purchaseType,
+                                              ),
                                             );
-                                            await showDialogBox.showDialogBox();
-                                            if (!myThemeData.getCancelStatus) {
-                                              myThemeData.addTransactions(
-                                                TransactionCard(
-                                                  amt: _amt,
-                                                  mon: mon,
-                                                  date: date,
-                                                  debit:
-                                                      transactionType == 'Debit'
-                                                          ? true
-                                                          : false,
-                                                  title: _title,
-                                                  type: purchaseType,
-                                                ),
-                                              );
-                                              Navigator.pop(context);
-                                              _textEditingController1.clear();
-                                              _textEditingController2.clear();
-                                            }
+                                            Navigator.pop(context);
+                                            _textEditingController1.clear();
+                                            _textEditingController2.clear();
                                           }
-                                        },
-                                        color: formComplete
-                                            ? kMyColor
-                                            : _isDarkMode
-                                                ? kMyDarkBGColor
-                                                : kMyLightBGColor),
+                                        }
+                                      },
+                                      color: formComplete
+                                          ? kMyColor
+                                          : _isDarkMode
+                                              ? kMyDarkBGColor
+                                              : kMyLightBGColor,
+                                    ),
                                   ],
                                 ),
                               ),

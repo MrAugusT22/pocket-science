@@ -1,4 +1,5 @@
 import 'package:fin_calc/utilities/constants.dart';
+import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,9 @@ class ShowDialogBox {
   Future showDialogBox() async {
     bool _isDarkMode =
         Provider.of<MyThemeData>(context, listen: false).getDarkMode;
+    Color kMyColor =
+        Provider.of<MyThemeData>(context, listen: false).getMyColor;
+
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -55,10 +59,7 @@ class ShowDialogBox {
                         .updateCancel(false);
                 Navigator.of(context).pop();
               },
-              child: Text(
-                actionButtonText,
-                style: TextStyle(color: Colors.red),
-              ),
+              child: InvestmentCardText(text: '$actionButtonText', color: kMyColor),
             ),
             //Cancel
             TextButton(
@@ -67,7 +68,7 @@ class ShowDialogBox {
                     .updateCancel(true);
                 Navigator.of(context).pop();
               },
-              child: const Text("CANCEL"),
+              child: InvestmentCardText(text: 'Cancel', color: Colors.blue),
             ),
           ],
         );

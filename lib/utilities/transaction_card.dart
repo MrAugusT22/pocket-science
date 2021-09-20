@@ -1,6 +1,6 @@
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +38,7 @@ class _TransactionCardState extends State<TransactionCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),

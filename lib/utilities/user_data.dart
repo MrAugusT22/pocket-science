@@ -1,13 +1,40 @@
 import 'package:fin_calc/utilities/transaction_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyThemeData extends ChangeNotifier {
+class UserData extends ChangeNotifier {
+  GoogleSignIn googleSignIn = GoogleSignIn();
+
+  GoogleSignInAccount? _user;
+
+  GoogleSignInAccount get user => _user!;
+
+  Future googleLogin() async {
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser != null) {
+      _user = googleUser;
+      final googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+    notifyListeners();
+  }
+
+  Future googleLogout() async {
+    await googleSignIn.disconnect();
+    FirebaseAuth.instance.signOut();
+  }
+
   late bool _isDarkMode;
   late ThemePreferences _themePreferences;
 
-  MyThemeData() {
+  UserData() {
     _isDarkMode = true;
     _themePreferences = ThemePreferences();
     getPreferences();
@@ -47,8 +74,7 @@ class MyThemeData extends ChangeNotifier {
         borderRadius: BorderRadius.circular(20),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-            color: kMyColor, width: 2),
+        borderSide: BorderSide(color: kMyColor, width: 2),
         borderRadius: BorderRadius.circular(20),
       ),
     );

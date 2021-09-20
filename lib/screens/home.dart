@@ -3,7 +3,7 @@ import 'package:fin_calc/screens/calculators.dart';
 import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/expenses.dart';
 import 'package:fin_calc/screens/profile.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       Color kMyColor = myThemeData.getMyColor;
 
       return Scaffold(

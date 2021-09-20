@@ -1,4 +1,4 @@
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class InputTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       return Expanded(
         child: TextField(

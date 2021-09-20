@@ -1,7 +1,10 @@
+import 'package:fin_calc/models/button.dart';
+import 'package:fin_calc/screens/welcome_screen.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/my_color_picker.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -15,6 +18,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> with TickerProviderStateMixin {
+  final user = FirebaseAuth.instance.currentUser!;
+
   List<Color> colorList = [
     Colors.red,
     Colors.blue,
@@ -40,7 +45,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         bottomColor = Colors.blue;
       });
     });
-    return Consumer<MyThemeData>(
+    return Consumer<UserData>(
       builder: (context, myThemeData, child) {
         bool _isDarkMode = myThemeData.getDarkMode;
         Color kMyColor = myThemeData.getMyColor;
@@ -143,10 +148,9 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       child: Material(
                         elevation: 5,
                         shape: CircleBorder(),
-                        color: Colors.white,
                         child: CircleAvatar(
                           radius: 95,
-                          backgroundColor: Colors.transparent,
+                          backgroundImage: NetworkImage(user.photoURL!),
                         ),
                       ),
                     ),
@@ -154,11 +158,11 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                   SizedBox(height: 20),
                   Center(
                       child: InvestmentCardText(
-                          text: 'Sahil Shetye', fontSize: 30.0)),
+                          text: '${user.displayName}', fontSize: 30.0)),
                   SizedBox(height: 10),
                   Center(
                     child: InvestmentCardText(
-                      text: 'sshetye466@gmail.com',
+                      text: '${user.email}',
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.normal,
                     ),
@@ -231,6 +235,22 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                         },
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Button(
+                    text: 'Log out',
+                    onPressed: () {
+                      try {
+                        myThemeData.googleLogout();
+                      } catch (e) {
+                        print(e);
+                      }
+
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, WelcomeScreen.id, (route) => false);
+                    },
                   ),
                 ],
               ),

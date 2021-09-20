@@ -1,5 +1,5 @@
 import 'package:fin_calc/utilities/constants.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class DoughnutChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       Color kMyColor = myThemeData.getMyColor;
 

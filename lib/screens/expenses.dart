@@ -3,7 +3,7 @@ import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/dialogbox.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
 
       List<TransactionCard> _transactionList = myThemeData.getTransactions;
@@ -71,7 +71,7 @@ class _ExpensesState extends State<Expenses> {
               title: 'Confirm?',
               delete: false,
               onPressed: () {
-                Provider.of<MyThemeData>(context, listen: false)
+                Provider.of<UserData>(context, listen: false)
                     .updateCancel(false);
                 Navigator.of(context).pop();
               });
@@ -351,7 +351,7 @@ class _ExpensesState extends State<Expenses> {
                                 delete: true,
                                 index: index,
                                 onPressed: () {
-                                  Provider.of<MyThemeData>(context,
+                                  Provider.of<UserData>(context,
                                           listen: false)
                                       .deleteTransaction(index);
                                   Navigator.of(context).pop();

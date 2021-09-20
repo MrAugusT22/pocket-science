@@ -1,4 +1,4 @@
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/constants.dart';
@@ -26,7 +26,7 @@ class AdditionalDataCard extends StatelessWidget {
       noTitle = true;
     }
 
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       return Material(
         elevation: elevation,

@@ -5,7 +5,11 @@ class Blob extends StatelessWidget {
   final scale;
   final rotation;
 
-  Blob({@required this.color, @required this.rotation, @required this.scale});
+  Blob({
+    @required this.color,
+    @required this.rotation,
+    @required this.scale,
+  });
 
   @override
   Widget build(BuildContext context) {

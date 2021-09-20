@@ -1,15 +1,17 @@
+import 'package:fin_calc/models/blob.dart';
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/screens/home.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/dialogbox.dart';
 import 'package:fin_calc/utilities/errors.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +45,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void signUp() async {
     setState(() {
       showSpinner = true;
+      setState(() {
+        showSpinner = true;
+        Center(
+          child: CircularProgressIndicator(),
+        );
+      });
     });
     try {
       final newUser = await _auth.createUserWithEmailAndPassword(
@@ -74,6 +82,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void signIn() async {
     setState(() {
       showSpinner = true;
+      Center(
+        child: CircularProgressIndicator(),
+      );
     });
     try {
       final user = await _auth.signInWithEmailAndPassword(
@@ -101,7 +112,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       Color kMyColor = myThemeData.getMyColor;
       InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
@@ -141,7 +152,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         SizedBox(height: 10),
                         TextField(
-                          autofocus: true,
                           style: TextStyle(fontSize: 20),
                           controller: _textEditingController1,
                           keyboardType: TextInputType.emailAddress,
@@ -218,6 +228,35 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                           ],
                         ),
+                        SizedBox(height: 10),
+                        RawMaterialButton(
+                          onPressed: () {
+                            myThemeData.googleLogin();
+                            Navigator.pop(context);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          fillColor: Colors.transparent,
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: kMyColor,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FaIcon(FontAwesomeIcons.google),
+                                SizedBox(width: 10),
+                                InvestmentCardText(
+                                  text: 'Sign in with Google',
+                                  fontSize: 20.0,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -228,78 +267,97 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         );
       }
 
-      return ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        color: kMyColor,
-        child: Scaffold(
-          body: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 0.6 * MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xfff6c8d7),
-                    ),
-                  ),
-                  Positioned(
-                    left: (MediaQuery.of(context).size.width / 2) - 80,
-                    top: (MediaQuery.of(context).size.width / 2) - 120,
-                    height: 100,
-                    width: 100,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('images/pigmoney1.jpg')),
+      return Scaffold(
+        body: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: InvestmentCardText(text: 'Error Occured'));
+            } else if (snapshot.hasData) {
+              return HomePage();
+              // Navigator.pushNamed(context, HomePage.id);
+            }
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
+                  children: [
+                    Material(
+                      elevation: 5,
+                      borderRadius: BorderRadius.only(
+                        // topLeft: Radius.circular(150),
+                        // topRight: Radius.circular(240),
+                        bottomLeft: Radius.circular(220),
+                        bottomRight: Radius.circular(150),
+                      ),
+                      child: Container(
+                        height: 0.6 * MediaQuery.of(context).size.height,
+                        width: 500,
+                        decoration: BoxDecoration(
+                          color: Color(0xfff6c8d7),
+                          borderRadius: BorderRadius.only(
+                            // topLeft: Radius.circular(150),
+                            // topRight: Radius.circular(240),
+                            bottomLeft: Radius.circular(220),
+                            bottomRight: Radius.circular(150),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    right: (MediaQuery.of(context).size.width / 2) - 60,
-                    top: (MediaQuery.of(context).size.width / 2) - 100,
-                    height: 100,
-                    width: 100,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('images/pigmoney2.jpg')),
+                    Positioned(
+                      left: (MediaQuery.of(context).size.width / 2) - 80,
+                      top: (MediaQuery.of(context).size.width / 2) - 120,
+                      height: 100,
+                      width: 100,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('images/pigmoney1.jpg')),
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    right: (MediaQuery.of(context).size.width / 2) - 75,
-                    bottom: (MediaQuery.of(context).size.width / 2) - 100,
-                    height: 150,
-                    width: 150,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('images/pigmoney3.jpg')),
+                    Positioned(
+                      right: (MediaQuery.of(context).size.width / 2) - 60,
+                      top: (MediaQuery.of(context).size.width / 2) - 100,
+                      height: 100,
+                      width: 100,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('images/pigmoney2.jpg')),
+                        ),
                       ),
                     ),
+                    Positioned(
+                      right: (MediaQuery.of(context).size.width / 2) - 75,
+                      bottom: (MediaQuery.of(context).size.width / 2) - 100,
+                      height: 150,
+                      width: 150,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('images/pigmoney3.jpg')),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Button(
+                    text: 'Get Started',
+                    onPressed: () {
+                      HapticFeedback.mediumImpact();
+                      getStarted();
+                    },
+                    color: Colors.blue,
                   ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Button(
-                text: 'Get Started',
-                onPressed: () {
-                  HapticFeedback.mediumImpact();
-                  getStarted();
-                },
-                color: Colors.blue,
-              ),
-              Button(
-                text: 'Get Started',
-                onPressed: () {
-                  HapticFeedback.mediumImpact();
-                  getStarted();
-                },
-                color: Color(0xffF6C8D7),
-              ),
-            ],
-          ),
+                ),
+              ],
+            );
+          },
         ),
       );
     });

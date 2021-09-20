@@ -1,7 +1,7 @@
 import 'package:fin_calc/screens/cagr.dart';
 import 'package:fin_calc/screens/emi.dart';
 import 'package:fin_calc/screens/sip.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +20,7 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(
+    return Consumer<UserData>(
       builder: (context, myThemeData, child) {
         Color kMyColor = myThemeData.getMyColor;
         

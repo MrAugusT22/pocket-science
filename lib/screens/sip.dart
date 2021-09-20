@@ -1,6 +1,6 @@
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/doughnut_chart.dart';
-import 'package:fin_calc/utilities/theme_data.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:flutter/rendering.dart';
@@ -74,7 +74,7 @@ class _SipState extends State<Sip> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyThemeData>(builder: (context, myThemeData, child) {
+    return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
       Color kMyColor = myThemeData.getMyColor;
 

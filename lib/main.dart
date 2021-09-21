@@ -33,24 +33,28 @@ class FinCalc extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserData>(
       create: (context) => UserData(),
-      child: Consumer<UserData>(builder: (context, myThemeData, child) {
-        return MaterialApp(
-          theme: myThemeData.getDarkMode ? kMyDarkTheme : kMyLightTheme,
-          initialRoute: WelcomeScreen.id,
-          routes: {
-            WelcomeScreen.id: (context) => WelcomeScreen(),
-            HomePage.id: (context) => Center(child: HomePage()),
-            Dashboard.id: (context) => Dashboard(),
-            Expenses.id: (context) => Expenses(),
-            Calculator.id: (context) => Calculator(),
-            Profile.id: (context) => Profile(),
-            Sip.id: (context) => Sip(),
-            Cagr.id: (context) => Cagr(),
-            Emi.id: (context) => Emi(),
-            Currency.id: (context) => Currency(),
-          },
-        );
-      }),
+      child: Consumer<UserData>(
+        builder: (context, myThemeData, child) {
+          bool googleUserSign = myThemeData.getGoogleUserSignInStatus;
+          print(googleUserSign);
+          return MaterialApp(
+            theme: myThemeData.getDarkMode ? kMyDarkTheme : kMyLightTheme,
+            initialRoute: googleUserSign ? HomePage.id : WelcomeScreen.id,
+            routes: {
+              WelcomeScreen.id: (context) => WelcomeScreen(),
+              HomePage.id: (context) => Center(child: HomePage()),
+              Dashboard.id: (context) => Dashboard(),
+              Expenses.id: (context) => Expenses(),
+              Calculator.id: (context) => Calculator(),
+              Profile.id: (context) => Profile(),
+              Sip.id: (context) => Sip(),
+              Cagr.id: (context) => Cagr(),
+              Emi.id: (context) => Emi(),
+              Currency.id: (context) => Currency(),
+            },
+          );
+        },
+      ),
     );
   }
 }

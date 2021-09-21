@@ -18,7 +18,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> with TickerProviderStateMixin {
-  final user = FirebaseAuth.instance.currentUser!;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   List<Color> colorList = [
     Colors.red,
@@ -130,13 +130,16 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
           MyColorPicker(color: Colors.amber),
         ];
 
+        bool googleUserSignIn = myThemeData.getGoogleUserSignInStatus;
+        List userData = myThemeData.getUserData;
+        print(userData);
+
         return SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Material(
                     elevation: 5,
@@ -148,21 +151,24 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       child: Material(
                         elevation: 5,
                         shape: CircleBorder(),
-                        child: CircleAvatar(
-                          radius: 95,
-                          backgroundImage: NetworkImage(user.photoURL!),
-                        ),
+                        child: googleUserSignIn
+                            ? CircleAvatar(
+                                radius: 95,
+                                backgroundImage: NetworkImage(userData[2]),
+                              )
+                            : CircleAvatar(
+                                radius: 95, backgroundColor: Colors.white),
                       ),
                     ),
                   ),
                   SizedBox(height: 20),
                   Center(
                       child: InvestmentCardText(
-                          text: '${user.displayName}', fontSize: 30.0)),
+                          text: '${userData[1]}', fontSize: 30.0)),
                   SizedBox(height: 10),
                   Center(
                     child: InvestmentCardText(
-                      text: '${user.email}',
+                      text: '${userData[0]}',
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.normal,
                     ),
@@ -239,19 +245,35 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                   SizedBox(
                     height: 10,
                   ),
-                  Button(
-                    text: 'Log out',
-                    onPressed: () {
-                      try {
-                        myThemeData.googleLogout();
-                      } catch (e) {
-                        print(e);
-                      }
-
+                  GestureDetector(
+                    onTap: () {
+                      googleUserSignIn
+                          ? myThemeData.googleLogout()
+                          : _auth.signOut();
                       Navigator.pushNamedAndRemoveUntil(
                           context, WelcomeScreen.id, (route) => false);
                     },
+                    child: Material(
+                      elevation: 5,
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.transparent,
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: _isDarkMode ? kMyDarkBGColor : Colors.white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InvestmentCardText(text: 'Log Out'),
+                            SizedBox(width: 10),
+                            Icon(Icons.power_settings_new_rounded),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),

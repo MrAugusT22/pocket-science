@@ -24,8 +24,8 @@ class Blob extends StatelessWidget {
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(150),
               topRight: Radius.circular(240),
-              bottomLeft: Radius.circular(220),
-              bottomRight: Radius.circular(180),
+              bottomLeft: Radius.circular(250),
+              bottomRight: Radius.circular(165),
             ),
           ),
         ),

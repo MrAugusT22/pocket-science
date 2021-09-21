@@ -12,6 +12,28 @@ class UserData extends ChangeNotifier {
 
   GoogleSignInAccount get user => _user!;
 
+  bool googleUserSignIn = false;
+
+  late List userData;
+
+  void updateUserData(List data) {
+    userData = data;
+    notifyListeners();
+  }
+
+  List get getUserData {
+    return userData;
+  }
+
+  void updateUser(bool update) {
+    googleUserSignIn = update;
+    notifyListeners();
+  }
+
+  bool get getGoogleUserSignInStatus {
+    return googleUserSignIn;
+  }
+
   Future googleLogin() async {
     final googleUser = await googleSignIn.signIn();
     if (googleUser != null) {
@@ -23,10 +45,12 @@ class UserData extends ChangeNotifier {
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
     }
+    googleUserSignIn = true;
     notifyListeners();
   }
 
   Future googleLogout() async {
+    googleUserSignIn = false;
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }

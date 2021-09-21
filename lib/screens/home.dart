@@ -31,6 +31,13 @@ class _HomePageState extends State<HomePage> {
       if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
+        List userData = [
+          loggedInUser.email,
+          loggedInUser.displayName ?? '${loggedInUser.email}',
+          loggedInUser.photoURL ?? 'No image',
+        ];
+        print(userData);
+        Provider.of<UserData>(context, listen: false).updateUserData(userData);
       }
     } catch (e) {
       print(e);
@@ -55,6 +62,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
       Color kMyColor = myThemeData.getMyColor;
+      print(myThemeData.getGoogleUserSignInStatus);
 
       return Scaffold(
         extendBody: true,

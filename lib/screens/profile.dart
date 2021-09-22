@@ -162,7 +162,8 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                     ? kMyDarkBGColor
                                     : kMyLightBGColor,
                                 child: InvestmentCardText(
-                                  text: '${userData[0][0].toString().toUpperCase()}',
+                                  text:
+                                      '${userData[0][0].toString().toUpperCase()}',
                                   fontSize: 60.0,
                                 ),
                               ),
@@ -255,7 +256,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                   ),
                   GestureDetector(
                     onTap: () {
-                      
                       googleUserSignIn
                           ? myThemeData.googleLogout()
                           : _auth.signOut();

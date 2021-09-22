@@ -36,6 +36,10 @@ class _HomePageState extends State<HomePage> {
           loggedInUser.displayName ?? '${loggedInUser.email}',
           loggedInUser.photoURL ?? 'No image',
         ];
+        RegExp googleUser = RegExp('(gmail.com)');
+        if (googleUser.hasMatch(loggedInUser.email.toString())) {
+          Provider.of<UserData>(context, listen: false).updateUser(true);
+        }
         print(userData);
         Provider.of<UserData>(context, listen: false).updateUserData(userData);
       }

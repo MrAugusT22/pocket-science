@@ -4,6 +4,7 @@ import 'package:fin_calc/screens/currency.dart';
 import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/emi.dart';
 import 'package:fin_calc/screens/expenses.dart';
+import 'package:fin_calc/screens/login_page.dart';
 import 'package:fin_calc/screens/profile.dart';
 import 'package:fin_calc/screens/sip.dart';
 import 'package:fin_calc/screens/home.dart';
@@ -39,8 +40,9 @@ class FinCalc extends StatelessWidget {
           print(googleUserSign);
           return MaterialApp(
             theme: myThemeData.getDarkMode ? kMyDarkTheme : kMyLightTheme,
-            initialRoute: googleUserSign ? HomePage.id : WelcomeScreen.id,
+            initialRoute: Login.id, //googleUserSign ? HomePage.id : WelcomeScreen.id,
             routes: {
+              Login.id: (context) => Login(),
               WelcomeScreen.id: (context) => WelcomeScreen(),
               HomePage.id: (context) => Center(child: HomePage()),
               Dashboard.id: (context) => Dashboard(),

@@ -157,7 +157,15 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                 backgroundImage: NetworkImage(userData[2]),
                               )
                             : CircleAvatar(
-                                radius: 95, backgroundColor: Colors.white),
+                                radius: 95,
+                                backgroundColor: _isDarkMode
+                                    ? kMyDarkBGColor
+                                    : kMyLightBGColor,
+                                child: InvestmentCardText(
+                                  text: '${userData[0][0].toString().toUpperCase()}',
+                                  fontSize: 60.0,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -247,6 +255,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                   ),
                   GestureDetector(
                     onTap: () {
+                      
                       googleUserSignIn
                           ? myThemeData.googleLogout()
                           : _auth.signOut();

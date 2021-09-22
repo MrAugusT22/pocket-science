@@ -322,7 +322,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       elevation: 5,
                       child: CircleAvatar(
                         radius: 80,
-                        backgroundColor: Colors.blue,
+                        backgroundColor: kMyColor,
                         child: CircleAvatar(
                           radius: 78,
                           backgroundImage: AssetImage(kMyImage),
@@ -353,7 +353,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   HapticFeedback.mediumImpact();
                   getStarted();
                 },
-                color: Colors.blue,
+                color: kMyColor,
               ),
             ),
           ],

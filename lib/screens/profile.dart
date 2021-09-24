@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/screens/welcome_screen.dart';
+import 'package:fin_calc/services/firebase_services.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/my_color_picker.dart';
@@ -19,6 +21,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<Color> colorList = [
     Colors.red,
@@ -173,11 +176,11 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                   SizedBox(height: 20),
                   Center(
                       child: InvestmentCardText(
-                          text: '${userData[1]}', fontSize: 30.0)),
+                          text: '${userData[0]}', fontSize: 30.0)),
                   SizedBox(height: 10),
                   Center(
                     child: InvestmentCardText(
-                      text: '${userData[0]}',
+                      text: '${userData[1]}',
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.normal,
                     ),
@@ -218,7 +221,15 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                             activeColor: kMyColor,
                             value: _isDarkMode,
                             onChanged: (value) {
-                              myThemeData.toggleDarkMode();
+                              myThemeData.toggleDarkMode(value);
+                              FirebaseService(
+                                      uid: userData[3], context: context)
+                                  .updateUserData(
+                                      name: userData[0],
+                                      email: userData[1],
+                                      color:
+                                          '${kMyColor.value.toRadixString(16)}',
+                                      isDarkMode: value);
                             },
                           ),
                         ],

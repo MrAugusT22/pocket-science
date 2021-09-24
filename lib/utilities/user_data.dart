@@ -56,10 +56,12 @@ class UserData extends ChangeNotifier {
   }
 
   late bool _isDarkMode;
+  late Color kMyColor;
   late ThemePreferences _themePreferences;
 
   UserData() {
     _isDarkMode = true;
+    kMyColor = Colors.blue;
     _themePreferences = ThemePreferences();
     getPreferences();
   }
@@ -86,8 +88,6 @@ class UserData extends ChangeNotifier {
 
   bool cancel = true;
 
-  Color kMyColor = Colors.blue;
-
   InputDecoration get getTextFieldDecoration {
     return InputDecoration(
       hintStyle: TextStyle(fontFamily: "RobotoMono"),
@@ -110,6 +110,7 @@ class UserData extends ChangeNotifier {
 
   void updateMyColor(Color color) {
     kMyColor = color;
+    _themePreferences.setColor(kMyColor.value.toRadixString(16));
     notifyListeners();
   }
 
@@ -166,14 +167,16 @@ class UserData extends ChangeNotifier {
     return _isDarkMode;
   }
 
-  void toggleDarkMode() {
-    _isDarkMode = !_isDarkMode;
+  void toggleDarkMode(bool value) {
+    _isDarkMode = value;
     _themePreferences.setTheme(_isDarkMode);
     notifyListeners();
   }
 
   void getPreferences() async {
     _isDarkMode = await _themePreferences.getTheme();
+    String value = _themePreferences.getColor();
+    kMyColor = Color(int.parse(value, radix: 16));
     notifyListeners();
   }
 }
@@ -189,5 +192,15 @@ class ThemePreferences {
   getTheme() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getBool(PREF_KEY) ?? false;
+  }
+
+  setColor(String value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(PREF_KEY, value);
+  }
+
+  getColor() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(PREF_KEY) ?? 'ff2196f3';
   }
 }

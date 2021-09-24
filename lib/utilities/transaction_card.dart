@@ -1,3 +1,4 @@
+import 'package:fin_calc/utilities/calculations.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/user_data.dart';
@@ -8,13 +9,11 @@ import 'package:provider/provider.dart';
 class TransactionCard extends StatefulWidget {
   final debit;
   final title;
-  final mon;
   final date;
   final amt;
   final type;
   TransactionCard({
     @required this.amt,
-    @required this.mon,
     @required this.date,
     @required this.debit,
     @required this.title,
@@ -40,6 +39,10 @@ class _TransactionCardState extends State<TransactionCard> {
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
+      myThemeData.formatDate(widget.date.toDate());
+      String mon = myThemeData.getDate[0];
+      int date = myThemeData.getDate[1];
+
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Material(
@@ -61,25 +64,24 @@ class _TransactionCardState extends State<TransactionCard> {
               children: [
                 Column(
                   children: [
-                    InvestmentCardText(text: '${widget.mon}'),
+                    InvestmentCardText(text: '${mon}'),
                     InvestmentCardText(
-                      text: '${widget.date}',
-                      color:
-                          _isDarkMode ? Colors.white60 : Colors.black54,
+                      text: '${date}',
+                      color: _isDarkMode ? Colors.white60 : Colors.black54,
                     ),
                   ],
                 ),
                 SizedBox(width: 10),
                 Container(
-                    constraints: BoxConstraints.tightFor(
-                      height: 30,
-                      width: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _isDarkMode ? Colors.white12 : Colors.black26,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                  constraints: BoxConstraints.tightFor(
+                    height: 30,
+                    width: 2,
                   ),
+                  decoration: BoxDecoration(
+                    color: _isDarkMode ? Colors.white12 : Colors.black26,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
                 SizedBox(width: 10),
                 Icon(
                   _purchaseTypeList[widget.type],
@@ -95,8 +97,7 @@ class _TransactionCardState extends State<TransactionCard> {
                         text: '${widget.type}',
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.normal,
-                        color:
-                            _isDarkMode ? Colors.white60 : Colors.black54,
+                        color: _isDarkMode ? Colors.white60 : Colors.black54,
                       ),
                     ],
                   ),

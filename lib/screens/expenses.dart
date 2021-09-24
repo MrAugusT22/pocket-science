@@ -39,8 +39,6 @@ class _ExpensesState extends State<Expenses> {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
 
-      List<TransactionCard> _transactionList = myThemeData.getTransactions;
-      int count = _transactionList.length;
       List _purchaseTypes = myThemeData.getPurchaseTypes;
 
       List _transactionTypes = myThemeData.getTransactionTypesList;
@@ -57,10 +55,11 @@ class _ExpensesState extends State<Expenses> {
 
       bool formComplete = false;
 
-      bool _transactionListEmpty = _transactionList.isEmpty;
       Color kMyColor = myThemeData.getMyColor;
 
       InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
+
+      String uid = myThemeData.getUserData[3];
 
       void addTransaction() async {
         if (formComplete) {
@@ -77,17 +76,12 @@ class _ExpensesState extends State<Expenses> {
               });
           await showDialogBox.showDialogBox();
           if (!myThemeData.getCancelStatus) {
-            myThemeData.addTransactions(
-              TransactionCard(
-                amt: _amt,
-                mon: mon,
-                date: date,
-                debit: transactionType == 'Debit' ? true : false,
-                title: _title,
-                type: purchaseType,
-              ),
-            );
-            firestore.collection('transactions').add({
+            firestore
+                .collection('users')
+                .doc(uid)
+                .collection('transactions')
+                .add({
+              'userId': uid,
               'amt': _amt,
               'title': _title,
               'debit': transactionType == 'Debit' ? true : false,
@@ -147,7 +141,6 @@ class _ExpensesState extends State<Expenses> {
                                   _textEditingController1.text.isNotEmpty &&
                                       _textEditingController2.text.isNotEmpty;
                               _title = value;
-                              print(value);
                             });
                           },
                         ),
@@ -300,72 +293,97 @@ class _ExpensesState extends State<Expenses> {
         );
       }
 
+      late List _transactionList;
+
+      Stream<QuerySnapshot<Object?>> transactionStream = firestore
+          .collection('users')
+          .doc(uid)
+          .collection('transactions')
+          .orderBy('date', descending: true)
+          .snapshots();
+
+      myThemeData.formatDate(DateTime.now());
+      String month = myThemeData.getDate[0];
+
       return Scaffold(
         extendBody: true,
         body: Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
           child: Stack(
             children: [
-              _transactionListEmpty
-                  ? Center(
-                      child: Icon(
-                        Icons.add_circle_outline_rounded,
-                        size: 120,
-                        color: _isDarkMode ? Colors.white12 : Colors.black26,
-                      ),
-                    )
-                  : ListView.separated(
-                      padding: EdgeInsets.only(bottom: 156, top: 30),
-                      separatorBuilder: (context, index) {
-                        return SizedBox(height: 5);
-                      },
-                      physics: BouncingScrollPhysics(),
-                      itemCount: count,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: UniqueKey(),
-                          background: Container(
-                            alignment: AlignmentDirectional.centerStart,
-                            color: Colors.red,
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(10.0, 0.0, 0, 0.0),
-                              child: Icon(Icons.delete, color: Colors.white),
+              StreamBuilder<QuerySnapshot>(
+                  stream: transactionStream,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    final transactions = snapshot.data!.docs;
+
+                    if (transactions.isEmpty) {
+                      return Center(
+                        child: Icon(
+                          Icons.add_circle_outline_rounded,
+                          size: 120,
+                          color: _isDarkMode ? Colors.white12 : Colors.black26,
+                        ),
+                      );
+                    } else {
+                      _transactionList =
+                          transactions.map((DocumentSnapshot doc) {
+                        Map<String, dynamic> data =
+                            doc.data()! as Map<String, dynamic>;
+                        return TransactionCard(
+                            amt: data['amt'],
+                            date: data['date'],
+                            debit: data['debit'],
+                            title: data['title'],
+                            type: data['purchaseType']);
+                      }).toList();
+
+                      return ListView.separated(
+                        padding: EdgeInsets.only(bottom: 156, top: 30),
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 10);
+                        },
+                        physics: BouncingScrollPhysics(),
+                        itemCount: _transactionList.length,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                            key: UniqueKey(),
+                            background: Container(
+                              alignment: AlignmentDirectional.centerStart,
+                              color: Colors.red,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(10.0, 0.0, 0, 0.0),
+                                child: Icon(Icons.delete, color: Colors.white),
+                              ),
                             ),
-                          ),
-                          secondaryBackground: Container(
-                            alignment: AlignmentDirectional.centerEnd,
-                            color: Colors.green,
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                              child:
-                                  Icon(Icons.star_rounded, color: Colors.white),
-                            ),
-                          ),
-                          confirmDismiss: (DismissDirection direction) async {
-                            return await ShowDialogBox(
-                                context: context,
-                                actionButtonText: 'Delete',
-                                msg:
-                                    'Are you sure want to delete this message?',
-                                title: 'Delete',
-                                delete: true,
-                                index: index,
-                                onPressed: () {
-                                  Provider.of<UserData>(context,
-                                          listen: false)
-                                      .deleteTransaction(index);
-                                  Navigator.of(context).pop();
-                                }).showDialogBox();
-                          },
-                          onDismissed: (direction) {
-                            setState(() {
-                              myThemeData.deleteTransaction(index);
-                            });
-                          },
-                          child: _transactionList[index],
-                        );
-                      },
-                    ),
+                            confirmDismiss: (DismissDirection direction) async {
+                              return await ShowDialogBox(
+                                  context: context,
+                                  actionButtonText: 'Delete',
+                                  msg:
+                                      'Are you sure want to delete this message?',
+                                  title: 'Delete',
+                                  delete: true,
+                                  index: index,
+                                  onPressed: () async {
+                                    await firestore.runTransaction(
+                                        (Transaction myTransaction) async {
+                                      await myTransaction.delete(
+                                          transactions[index].reference);
+                                    });
+                                    Navigator.of(context).pop();
+                                  }).showDialogBox();
+                            },
+                            onDismissed: (direction)  {
+                            },
+                            child: _transactionList[index],
+                          );
+                        },
+                      );
+                    }
+                  }),
               Positioned(
                 bottom: 70,
                 right: 0,
@@ -393,5 +411,51 @@ class _ExpensesState extends State<Expenses> {
         ),
       );
     });
+  }
+}
+
+class MonthCard extends StatelessWidget {
+  const MonthCard({
+    Key? key,
+    required this.mon,
+    required this.monthlyExpenses,
+    required this.kMyColor,
+  }) : super(key: key);
+
+  final String mon;
+  final double monthlyExpenses;
+  final Color kMyColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InvestmentCardText(
+                text: mon,
+                fontSize: 25.0,
+              ),
+              InvestmentCardText(
+                text: '$monthlyExpenses',
+                fontSize: 25.0,
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+            constraints: BoxConstraints.tightFor(
+                height: 2, width: MediaQuery.of(context).size.width - 5),
+            decoration: BoxDecoration(
+              color: kMyColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

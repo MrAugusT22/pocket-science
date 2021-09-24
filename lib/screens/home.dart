@@ -3,6 +3,7 @@ import 'package:fin_calc/screens/calculators.dart';
 import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/expenses.dart';
 import 'package:fin_calc/screens/profile.dart';
+import 'package:fin_calc/services/firebase_services.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +26,30 @@ class _HomePageState extends State<HomePage> {
   late User loggedInUser;
   int _currentIndex = 0;
 
+  String userName = '';
+  String userEmail = '';
+  String userPhoto = '';
+  String uid = '';
+
+  void updateUserData() async {
+    Color kMyColor = Provider.of<UserData>(context, listen: false).getMyColor;
+    bool isDarkMode = Provider.of<UserData>(context, listen: false).getDarkMode;
+  }
+
   void getUser() async {
     try {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        print(loggedInUser.email);
+        userName = loggedInUser.displayName ?? '${loggedInUser.email}';
+        userEmail = loggedInUser.email.toString();
+        userPhoto = loggedInUser.photoURL ?? 'No image';
+        uid = loggedInUser.uid;
         List userData = [
-          loggedInUser.email,
-          loggedInUser.displayName ?? '${loggedInUser.email}',
-          loggedInUser.photoURL ?? 'No image',
+          userName,
+          userEmail,
+          userPhoto,
+          uid,
         ];
         RegExp googleUser = RegExp('(gmail.com)');
         if (googleUser.hasMatch(loggedInUser.email.toString())) {
@@ -42,6 +57,7 @@ class _HomePageState extends State<HomePage> {
         }
         print(userData);
         Provider.of<UserData>(context, listen: false).updateUserData(userData);
+        updateUserData();
       }
     } catch (e) {
       print(e);

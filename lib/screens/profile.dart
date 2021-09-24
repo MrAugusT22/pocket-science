@@ -56,6 +56,9 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         Color pickerColor = Color(0xff443a49);
         Color currentColor = Color(0xff443a49);
 
+        List userData = myThemeData.getUserData;
+        print(userData);
+
         List myColorPickerList = [
           GestureDetector(
             onTap: () async {
@@ -97,6 +100,12 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 },
               );
               myThemeData.updateMyColor(pickerColor);
+              FirebaseService(
+                                      uid: userData[3], context: context)
+                                  .updateUserData(
+                                      color:
+                                          '${pickerColor.value.toRadixString(16)}',
+                                      isDarkMode: _isDarkMode);
             },
             child: AnimatedContainer(
               duration: Duration(seconds: 2),
@@ -134,8 +143,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         ];
 
         bool googleUserSignIn = myThemeData.getGoogleUserSignInStatus;
-        List userData = myThemeData.getUserData;
-        print(userData);
 
         return SafeArea(
           child: Scaffold(
@@ -225,8 +232,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                               FirebaseService(
                                       uid: userData[3], context: context)
                                   .updateUserData(
-                                      name: userData[0],
-                                      email: userData[1],
                                       color:
                                           '${kMyColor.value.toRadixString(16)}',
                                       isDarkMode: value);

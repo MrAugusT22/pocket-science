@@ -1,4 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_calc/screens/calculators.dart';
 import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/expenses.dart';
@@ -23,6 +24,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
   late User loggedInUser;
   int _currentIndex = 0;
 
@@ -30,11 +32,26 @@ class _HomePageState extends State<HomePage> {
   String userEmail = '';
   String userPhoto = '';
   String uid = '';
+  
+  void updateUserData(BuildContext context) async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userThemeData =
+          await _firestore.collection('users').doc(user.uid).get();
+      String userColor = userThemeData['color'];
+      bool isDarkMode = userThemeData['darkMode'];
 
-  void updateUserData() async {
-    Color kMyColor = Provider.of<UserData>(context, listen: false).getMyColor;
-    bool isDarkMode = Provider.of<UserData>(context, listen: false).getDarkMode;
+      Provider.of<UserData>(context, listen: false)
+          .updateMyColor(Color(int.parse(
+        userColor,
+        radix: 16,
+      )));
+      Provider.of<UserData>(context, listen: false).toggleDarkMode(isDarkMode);
+    }
   }
+
+
 
   void getUser() async {
     try {
@@ -57,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         }
         print(userData);
         Provider.of<UserData>(context, listen: false).updateUserData(userData);
-        updateUserData();
+        updateUserData(context);
       }
     } catch (e) {
       print(e);

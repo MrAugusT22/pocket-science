@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_calc/screens/home.dart';
 import 'package:fin_calc/screens/welcome_screen.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
+import 'package:fin_calc/utilities/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
   static const String id = 'login';

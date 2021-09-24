@@ -19,8 +19,6 @@ class FirebaseService {
       FirebaseFirestore.instance.collection('transactions');
 
   Future updateUserData({
-    required String name,
-    required String email,
     required String color,
     required bool isDarkMode,
   }) async {
@@ -29,8 +27,6 @@ class FirebaseService {
     Provider.of<UserData>(context, listen: false).toggleDarkMode(isDarkMode);
 
     return await usersCollection.doc(uid).set({
-      'name': name,
-      'email': email,
       'color': color,
       'darkMode': isDarkMode,
     });

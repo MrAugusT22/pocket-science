@@ -39,79 +39,80 @@ class _TransactionCardState extends State<TransactionCard> {
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
-      myThemeData.formatDate(widget.date.toDate());
-      String mon = myThemeData.getDate[0];
-      int date = myThemeData.getDate[1];
+      formatDate(widget.date.toDate());
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Material(
-          elevation: 5,
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            decoration: BoxDecoration(
-              color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: widget.debit ? Colors.red : Colors.green,
-                  spreadRadius: 2,
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Material(
+            elevation: 5,
+            borderRadius: BorderRadius.circular(20),
+            child: ClipPath(
+              clipper: ShapeBorderClipper(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor,
+                  border: Border(
+                    left: BorderSide(
+                        color: widget.debit? Colors.red : Colors.green, width: 7.0),
+                  ),
                 ),
-              ],
-            ),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Column(
+                padding: EdgeInsets.all(10),
+                child: Row(
                   children: [
-                    InvestmentCardText(text: '${mon}'),
-                    InvestmentCardText(
-                      text: '${date}',
-                      color: _isDarkMode ? Colors.white60 : Colors.black54,
+                    Column(
+                      children: [
+                        InvestmentCardText(text: '$mon'),
+                        InvestmentCardText(
+                          text: '$date',
+                          color: _isDarkMode ? Colors.white60 : Colors.black54,
+                        ),
+                      ],
                     ),
+                    SizedBox(width: 10),
+                    Container(
+                      constraints: BoxConstraints.tightFor(
+                        height: 30,
+                        width: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _isDarkMode ? Colors.white12 : Colors.black26,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Icon(
+                      _purchaseTypeList[widget.type],
+                      size: 30,
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InvestmentCardText(text: widget.title),
+                          InvestmentCardText(
+                            text: '${widget.type}',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.normal,
+                            color:
+                                _isDarkMode ? Colors.white60 : Colors.black54,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    InvestmentCardText(
+                      text: '${widget.debit ? '-' : ''}₹${widget.amt}',
+                      fontStyle: FontStyle.italic,
+                    ),
+                    SizedBox(width: 10),
                   ],
                 ),
-                SizedBox(width: 10),
-                Container(
-                  constraints: BoxConstraints.tightFor(
-                    height: 30,
-                    width: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _isDarkMode ? Colors.white12 : Colors.black26,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Icon(
-                  _purchaseTypeList[widget.type],
-                  size: 30,
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InvestmentCardText(text: widget.title),
-                      InvestmentCardText(
-                        text: '${widget.type}',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.normal,
-                        color: _isDarkMode ? Colors.white60 : Colors.black54,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 10),
-                InvestmentCardText(
-                  text: '${widget.debit ? '-' : ''}₹${widget.amt}',
-                  fontStyle: FontStyle.italic,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      );
+          ));
     });
   }
 }

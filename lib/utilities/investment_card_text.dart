@@ -27,6 +27,7 @@ class InvestmentCardText extends StatelessWidget {
       ),
       textAlign: TextAlign.left,
       softWrap: true,
+      overflow: TextOverflow.fade,
     );
   }
 }

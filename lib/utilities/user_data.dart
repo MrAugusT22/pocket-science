@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +87,7 @@ class UserData extends ChangeNotifier {
 
   String mon = '';
   int date = 0;
+  String monYr = '';
 
   bool cancel = true;
 
@@ -128,17 +131,7 @@ class UserData extends ChangeNotifier {
   }
 
   List get getDate {
-    return [mon, date];
-  }
-
-  void formatDate(DateTime d) {
-    var format = DateFormat('MMM');
-    String date1 = format.format(d);
-    mon = date1;
-    var format2 = DateFormat('dd');
-    String date2 = format2.format(d);
-    int date3 = int.parse(date2);
-    date = date3;
+    return [mon, date, monYr];
   }
 
   List get getPurchaseTypes {

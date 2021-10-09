@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_calc/models/button.dart';
+import 'package:fin_calc/screens/sip.dart';
+import 'package:fin_calc/services/firebase_services.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/dialogbox.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
@@ -8,6 +10,7 @@ import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class Expenses extends StatefulWidget {
@@ -44,14 +47,10 @@ class _ExpensesState extends State<Expenses> {
       List _transactionTypes = myThemeData.getTransactionTypesList;
 
       String purchaseType = 'Food';
-      String transactionType = 'Credit';
+      String transactionType = 'Debit';
 
       double _amt = 0.0;
       String _title = '';
-
-      myThemeData.formatDate(selectedDate);
-      String mon = myThemeData.getDate[0];
-      int date = myThemeData.getDate[1];
 
       bool formComplete = false;
 
@@ -60,6 +59,8 @@ class _ExpensesState extends State<Expenses> {
       InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
 
       String uid = myThemeData.getUserData[3];
+      FirebaseService firebaseService =
+          FirebaseService(uid: uid, context: context);
 
       void addTransaction() async {
         if (formComplete) {
@@ -76,26 +77,22 @@ class _ExpensesState extends State<Expenses> {
               });
           await showDialogBox.showDialogBox();
           if (!myThemeData.getCancelStatus) {
-            firestore
-                .collection('users')
-                .doc(uid)
-                .collection('transactions')
-                .add({
-              'userId': uid,
-              'amt': _amt,
-              'title': _title,
-              'debit': transactionType == 'Debit' ? true : false,
-              'purchaseType': purchaseType,
-              'date': selectedDate,
-            });
+            firebaseService.addTransactionData(
+                amt: _amt,
+                title: _title,
+                debit: transactionType == 'Debit' ? true : false,
+                purchaseType: purchaseType,
+                date: selectedDate);
             Navigator.pop(context);
             _textEditingController1.clear();
             _textEditingController2.clear();
           }
+          formatDate(DateTime.now());
         }
       }
 
       void onAddTap() {
+        formatDate(DateTime.now());
         showModalBottomSheet(
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
@@ -122,7 +119,7 @@ class _ExpensesState extends State<Expenses> {
                       children: [
                         Center(
                           child: InvestmentCardText(
-                            text: 'Add Transaction',
+                            text: 'Add Transactions',
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -232,14 +229,14 @@ class _ExpensesState extends State<Expenses> {
                                 if (picked != null && picked != selectedDate)
                                   setState(() {
                                     selectedDate = picked;
-                                    myThemeData.formatDate(selectedDate);
-                                    mon = myThemeData.getDate[0];
-                                    date = myThemeData.getDate[1];
+                                    formatDate(selectedDate);
+                                    mon = mon;
+                                    date = date;
                                   });
                               },
                               child: Row(
                                 children: [
-                                  Icon(Icons.calendar_today_rounded),
+                                  Icon(FontAwesomeIcons.calendar),
                                   SizedBox(width: 10),
                                   InvestmentCardText(
                                     text: "$mon, $date",
@@ -302,8 +299,7 @@ class _ExpensesState extends State<Expenses> {
           .orderBy('date', descending: true)
           .snapshots();
 
-      myThemeData.formatDate(DateTime.now());
-      String month = myThemeData.getDate[0];
+      formatDate(DateTime.now());
 
       return Scaffold(
         extendBody: true,
@@ -376,8 +372,7 @@ class _ExpensesState extends State<Expenses> {
                                     Navigator.of(context).pop();
                                   }).showDialogBox();
                             },
-                            onDismissed: (direction)  {
-                            },
+                            onDismissed: (direction) {},
                             child: _transactionList[index],
                           );
                         },
@@ -389,6 +384,9 @@ class _ExpensesState extends State<Expenses> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
+                    print(mon);
+                    print(monYr);
+                    print('hello');
                     onAddTap();
                   },
                   child: Material(
@@ -411,51 +409,5 @@ class _ExpensesState extends State<Expenses> {
         ),
       );
     });
-  }
-}
-
-class MonthCard extends StatelessWidget {
-  const MonthCard({
-    Key? key,
-    required this.mon,
-    required this.monthlyExpenses,
-    required this.kMyColor,
-  }) : super(key: key);
-
-  final String mon;
-  final double monthlyExpenses;
-  final Color kMyColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InvestmentCardText(
-                text: mon,
-                fontSize: 25.0,
-              ),
-              InvestmentCardText(
-                text: '$monthlyExpenses',
-                fontSize: 25.0,
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Container(
-            constraints: BoxConstraints.tightFor(
-                height: 2, width: MediaQuery.of(context).size.width - 5),
-            decoration: BoxDecoration(
-              color: kMyColor,
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

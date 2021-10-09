@@ -100,12 +100,10 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 },
               );
               myThemeData.updateMyColor(pickerColor);
-              FirebaseService(
-                                      uid: userData[3], context: context)
-                                  .updateUserData(
-                                      color:
-                                          '${pickerColor.value.toRadixString(16)}',
-                                      isDarkMode: _isDarkMode);
+              FirebaseService(uid: userData[3], context: context)
+                  .updateUserData(
+                      color: '${pickerColor.value.toRadixString(16)}',
+                      isDarkMode: _isDarkMode);
             },
             child: AnimatedContainer(
               duration: Duration(seconds: 2),

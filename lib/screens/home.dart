@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   String userEmail = '';
   String userPhoto = '';
   String uid = '';
-  
+
   void updateUserData(BuildContext context) async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser;
@@ -50,8 +50,6 @@ class _HomePageState extends State<HomePage> {
       Provider.of<UserData>(context, listen: false).toggleDarkMode(isDarkMode);
     }
   }
-
-
 
   void getUser() async {
     try {

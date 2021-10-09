@@ -347,10 +347,23 @@ class _ExpensesState extends State<Expenses> {
                           return Dismissible(
                             key: UniqueKey(),
                             background: Container(
-                              alignment: AlignmentDirectional.centerStart,
-                              color: Colors.red,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.red),
+                              alignment: Alignment.centerLeft,
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(10.0, 0.0, 0, 0.0),
+                                child: Icon(Icons.delete, color: Colors.white),
+                              ),
+                            ),
+                            secondaryBackground: Container(
+                              alignment: Alignment.centerRight,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.red),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
                                 child: Icon(Icons.delete, color: Colors.white),
                               ),
                             ),
@@ -372,7 +385,9 @@ class _ExpensesState extends State<Expenses> {
                                     Navigator.of(context).pop();
                                   }).showDialogBox();
                             },
-                            onDismissed: (direction) {},
+                            onDismissed: (direction) {
+                              Navigator.of(context).pop();
+                            },
                             child: _transactionList[index],
                           );
                         },

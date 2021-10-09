@@ -54,6 +54,7 @@ class FirebaseService {
       'debit': debit,
       'purchaseType': purchaseType,
       'date': date,
+      'month': mon,
     });
   }
 }

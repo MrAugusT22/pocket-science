@@ -1,62 +1,10 @@
 import 'dart:developer';
-
 import 'package:fin_calc/utilities/transaction_card.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData extends ChangeNotifier {
-  GoogleSignIn googleSignIn = GoogleSignIn();
-
-  GoogleSignInAccount? _user;
-
-  GoogleSignInAccount get user => _user!;
-
-  bool googleUserSignIn = false;
-
-  late List userData;
-
-  void updateUserData(List data) {
-    userData = data;
-    notifyListeners();
-  }
-
-  List get getUserData {
-    return userData;
-  }
-
-  void updateUser(bool update) {
-    googleUserSignIn = update;
-    notifyListeners();
-  }
-
-  bool get getGoogleUserSignInStatus {
-    return googleUserSignIn;
-  }
-
-  Future googleLogin() async {
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser != null) {
-      _user = googleUser;
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    }
-    googleUserSignIn = true;
-    notifyListeners();
-  }
-
-  Future googleLogout() async {
-    googleUserSignIn = false;
-    await googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
-  }
-
   late bool _isDarkMode;
   late Color kMyColor;
   late ThemePreferences _themePreferences;

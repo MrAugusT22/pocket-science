@@ -1,17 +1,16 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_calc/screens/calculators.dart';
 import 'package:fin_calc/screens/dashboard.dart';
-import 'package:fin_calc/screens/expenses.dart';
 import 'package:fin_calc/screens/profile.dart';
-import 'package:fin_calc/services/firebase_services.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fin_calc/screens/cagr.dart';
+import 'package:fin_calc/screens/emi.dart';
+import 'package:fin_calc/screens/sip.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'welcome_page';
@@ -23,81 +22,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
-  late User loggedInUser;
-  int _currentIndex = 0;
-
-  String userName = '';
-  String userEmail = '';
-  String userPhoto = '';
-  String uid = '';
-
-  void updateUserData(BuildContext context) async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userThemeData =
-          await _firestore.collection('users').doc(user.uid).get();
-      String userColor = userThemeData['color'];
-      bool isDarkMode = userThemeData['darkMode'];
-
-      Provider.of<UserData>(context, listen: false)
-          .updateMyColor(Color(int.parse(
-        userColor,
-        radix: 16,
-      )));
-      Provider.of<UserData>(context, listen: false).toggleDarkMode(isDarkMode);
-    }
-  }
-
-  void getUser() async {
-    try {
-      final user = await _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        userName = loggedInUser.displayName ?? '${loggedInUser.email}';
-        userEmail = loggedInUser.email.toString();
-        userPhoto = loggedInUser.photoURL ?? 'No image';
-        uid = loggedInUser.uid;
-        List userData = [
-          userName,
-          userEmail,
-          userPhoto,
-          uid,
-        ];
-        RegExp googleUser = RegExp('(gmail.com)');
-        if (googleUser.hasMatch(loggedInUser.email.toString())) {
-          Provider.of<UserData>(context, listen: false).updateUser(true);
-        }
-        print(userData);
-        Provider.of<UserData>(context, listen: false).updateUserData(userData);
-        updateUserData(context);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   static List<Widget> _widgetOptions = [
+    Sip(),
+    Cagr(),
+    Emi(),
     Dashboard(),
-    Expenses(),
-    Calculator(),
     Profile(),
   ];
+
+  int _currentIndex = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
       Color kMyColor = myThemeData.getMyColor;
-      print(myThemeData.getGoogleUserSignInStatus);
 
       return Scaffold(
         extendBody: true,
@@ -118,10 +62,10 @@ class _HomePageState extends State<HomePage> {
                   icon: Padding(
                     padding: EdgeInsets.all(5),
                     child: _currentIndex == 0
-                        ? Icon(Icons.home_rounded)
-                        : Icon(Icons.home_outlined),
+                        ? Icon(Icons.payments_rounded)
+                        : Icon(Icons.payments_outlined),
                   ),
-                  title: Text('Home'),
+                  title: Text('SIP'),
                   activeColor: Colors.white,
                   textAlign: TextAlign.center,
                   inactiveColor: Colors.white54),
@@ -129,10 +73,10 @@ class _HomePageState extends State<HomePage> {
                 icon: Padding(
                   padding: EdgeInsets.all(5),
                   child: _currentIndex == 1
-                      ? Icon(Icons.pie_chart_rounded)
-                      : Icon(Icons.pie_chart_outline_rounded),
+                      ? Icon(Icons.savings_rounded)
+                      : Icon(Icons.savings_outlined),
                 ),
-                title: Text('Expenses'),
+                title: Text('CAGR'),
                 activeColor: Colors.white,
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.white54,
@@ -141,12 +85,24 @@ class _HomePageState extends State<HomePage> {
                 icon: Padding(
                   padding: EdgeInsets.all(5),
                   child: _currentIndex == 2
-                      ? Icon(Icons.calculate_rounded)
-                      : Icon(Icons.calculate_outlined),
+                      ? Icon(Icons.payment_rounded)
+                      : Icon(Icons.payment_outlined),
                 ),
                 title: Text(
-                  'Calculators',
+                  'EMI',
                 ),
+                activeColor: Colors.white,
+                textAlign: TextAlign.center,
+                inactiveColor: Colors.white54,
+              ),
+              BottomNavyBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: _currentIndex == 3
+                      ? Icon(Icons.paid_rounded)
+                      : Icon(Icons.paid_outlined),
+                ),
+                title: Text('Cryptos'),
                 activeColor: Colors.white,
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.white54,

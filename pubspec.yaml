@@ -35,11 +35,7 @@ dependencies:
   shared_preferences: ^2.0.7
   intl: ^0.17.0
   flutter_colorpicker: ^0.6.0
-  firebase_core: ^1.6.0
-  firebase_auth: ^3.1.1
-  cloud_firestore: ^2.5.3
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
-  google_sign_in: ^5.1.0
   font_awesome_flutter: ^9.1.0
 
 dev_dependencies:

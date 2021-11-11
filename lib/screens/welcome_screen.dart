@@ -6,7 +6,6 @@ import 'package:fin_calc/utilities/dialogbox.dart';
 import 'package:fin_calc/utilities/errors.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/user_data.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,60 +24,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
-  final _auth = FirebaseAuth.instance;
-
-  String email = '';
-  String password = '';
-
-  late TextEditingController _textEditingController1;
-  late TextEditingController _textEditingController2;
-
-  void signUp() async {
-    try {
-      final newUser = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      if (newUser != null) {
-        Navigator.pushNamed(context, HomePage.id);
-        print('user created');
-      }
-    } catch (e) {
-      print(e);
-      ShowDialogBox showDialogBox = ShowDialogBox(
-        context: context,
-        actionButtonText: 'OK',
-        msg: 'Email Id already taken 🙁',
-        title: 'Error',
-        delete: false,
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
-      await showDialogBox.showDialogBox();
-      print(Errors.show(e.toString()));
-    }
-  }
-
-  void signIn() async {
-    try {
-      final user = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      if (user != null) {
-        Navigator.pushNamed(context, HomePage.id);
-        print('user sign in');
-      }
-    } catch (e) {
-      ShowDialogBox showDialogBox = ShowDialogBox(
-        context: context,
-        actionButtonText: 'OK',
-        msg: 'Email Id already taken 🙁',
-        title: 'Error',
-        delete: false,
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
-    }
-  }
 
   static const _kToggleDuration = Duration(milliseconds: 300);
   static const _kRotationDuration = Duration(milliseconds: 5000);
@@ -93,8 +38,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _textEditingController1 = TextEditingController();
-    _textEditingController2 = TextEditingController();
 
     _rotationController =
         AnimationController(vsync: this, duration: _kRotationDuration);
@@ -141,153 +84,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       bool formComplete = false;
 
       void getStarted() async {
-        showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-          isScrollControlled: true,
-          context: context,
-          builder: (context) => StatefulBuilder(
-            builder: (context, setState) {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            topLeft: Radius.circular(30)),
-                        color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Center(
-                          child: InvestmentCardText(
-                            text: 'Sign In/Up',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          style: TextStyle(fontSize: 20),
-                          controller: _textEditingController1,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration:
-                              kTextFieldDecoration.copyWith(hintText: 'Email'),
-                          onChanged: (value) {
-                            setState(() {
-                              formComplete =
-                                  _textEditingController1.text.isNotEmpty &&
-                                      _textEditingController2.text.isNotEmpty;
-                              email = value;
-                              print(value);
-                            });
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          obscureText: true,
-                          style: TextStyle(fontSize: 20),
-                          controller: _textEditingController2,
-                          decoration: kTextFieldDecoration.copyWith(
-                              hintText: 'Password'),
-                          onChanged: (value) {
-                            setState(() {
-                              formComplete =
-                                  _textEditingController1.text.isNotEmpty &&
-                                      _textEditingController2.text.isNotEmpty;
-                              password = value;
-                              print(value);
-                            });
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Button(
-                                text: 'Sign Up',
-                                textSize: 20.0,
-                                onPressed: () async {
-                                  if (formComplete) {
-                                    _textEditingController1.clear();
-                                    _textEditingController2.clear();
-                                    Navigator.pop(context);
-                                    signUp();
-                                  }
-                                },
-                                color: formComplete
-                                    ? kMyColor
-                                    : _isDarkMode
-                                        ? kMyDarkBGColor
-                                        : kMyLightBGColor,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Button(
-                                text: 'Sign In',
-                                textSize: 20.0,
-                                onPressed: () async {
-                                  if (formComplete) {
-                                    _textEditingController1.clear();
-                                    _textEditingController2.clear();
-                                    Navigator.pop(context);
-                                    signIn();
-                                  }
-                                },
-                                color: formComplete
-                                    ? kMyColor
-                                    : _isDarkMode
-                                        ? kMyDarkBGColor
-                                        : kMyLightBGColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        RawMaterialButton(
-                          onPressed: () async {
-                            await myThemeData.googleLogin();
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, HomePage.id);
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          fillColor: Colors.transparent,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: kMyColor,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FaIcon(FontAwesomeIcons.google),
-                                SizedBox(width: 10),
-                                InvestmentCardText(
-                                  text: 'Sign in with Google',
-                                  fontSize: 20.0,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        );
+        Navigator.pushNamed(context, HomePage.id);
       }
 
       return Scaffold(

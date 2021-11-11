@@ -71,145 +71,154 @@ class _CagrState extends State<Cagr> {
       bool _isDarkMode = myThemeData.getDarkMode;
       Color kMyColor = myThemeData.getMyColor;
       
-      return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.transparent,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
-                child: Column(
-                  children: [
-                    Row(
+      return ListView.separated(
+        separatorBuilder: (context, index) {
+                return SizedBox(height: 5);
+              },
+              physics: BouncingScrollPhysics(),
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.transparent,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Button(
-                            text: 'CAGR',
-                            onPressed: () {
-                              setState(() {
-                                selectedMode = Mode.cagr;
-                                update();
-                              });
-                            },
-                            textSize: 15.0,
-                            arrow: false,
-                            center: true,
-                            color: selectedMode == Mode.cagr
-                                ? kMyColor
-                                : _isDarkMode
-                                    ? kMyDarkBGColor
-                                    : kMyLightBGColor,
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Button(
-                            text: 'NET',
-                            onPressed: () {
-                              setState(() {
-                                selectedMode = Mode.total;
-                                update();
-                              });
-                            },
-                            textSize: 15.0,
-                            arrow: false,
-                            center: true,
-                            color: selectedMode == Mode.total
-                                ? kMyColor
-                                : _isDarkMode
-                                    ? kMyDarkBGColor
-                                    : kMyLightBGColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        InvestmentCardText(text: 'Investment: '),
-                        InputTextField(
-                          textEditingController: _textEditingController1,
-                          hintText: '1000',
-                          prefixText: '₹',
-                          onChanged: (value) {
-                            String x = value;
-                            try {
-                              p = double.parse(x);
-                            } catch (e) {
-                              p = 0;
-                            }
-                            update();
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        InvestmentCardText(text: 'Final Value: '),
-                        InputTextField(
-                          textEditingController: _textEditingController2,
-                          hintText: '5000',
-                          prefixText: '₹',
-                          onChanged: (value) {
-                            String x = value;
-                            try {
-                              a = double.parse(x);
-                            } catch (e) {
-                              a = 0;
-                            }
-                            update();
-                          },
-                        ),
-                      ],
-                    ),
-                    selectedMode == Mode.cagr
-                        ? Row(
-                            children: [
-                              InvestmentCardText(text: 'Time: '),
-                              InputTextField(
-                                textEditingController: _textEditingController3,
-                                hintText: '2',
-                                suffixText: 'YR',
-                                onChanged: (value) {
-                                  String x = value;
-                                  try {
-                                    t = double.parse(x);
-                                  } catch (e) {
-                                    t = 0;
-                                  }
-                                  print(t);
-                                  update();
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Button(
+                                text: 'CAGR',
+                                onPressed: () {
+                                  setState(() {
+                                    selectedMode = Mode.cagr;
+                                    update();
+                                  });
                                 },
+                                textSize: 15.0,
+                                arrow: false,
+                                center: true,
+                                color: selectedMode == Mode.cagr
+                                    ? kMyColor
+                                    : _isDarkMode
+                                        ? kMyDarkBGColor
+                                        : kMyLightBGColor,
                               ),
-                            ],
-                          )
-                        : Container(),
-                    SizedBox(height: 10),
-                    InvestmentCardText(text: 'Returns: ₹ $returns'),
-                    SizedBox(height: 10),
-                    InvestmentCardText(
-                        text:
-                            '${selectedMode == Mode.cagr ? 'CAGR: $res%' : 'Net Returns: $res%'}')
-                  ],
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Button(
+                                text: 'NET',
+                                onPressed: () {
+                                  setState(() {
+                                    selectedMode = Mode.total;
+                                    update();
+                                  });
+                                },
+                                textSize: 15.0,
+                                arrow: false,
+                                center: true,
+                                color: selectedMode == Mode.total
+                                    ? kMyColor
+                                    : _isDarkMode
+                                        ? kMyDarkBGColor
+                                        : kMyLightBGColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            InvestmentCardText(text: 'Investment: '),
+                            InputTextField(
+                              textEditingController: _textEditingController1,
+                              hintText: '1000',
+                              prefixText: '₹',
+                              onChanged: (value) {
+                                String x = value;
+                                try {
+                                  p = double.parse(x);
+                                } catch (e) {
+                                  p = 0;
+                                }
+                                update();
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            InvestmentCardText(text: 'Final Value: '),
+                            InputTextField(
+                              textEditingController: _textEditingController2,
+                              hintText: '5000',
+                              prefixText: '₹',
+                              onChanged: (value) {
+                                String x = value;
+                                try {
+                                  a = double.parse(x);
+                                } catch (e) {
+                                  a = 0;
+                                }
+                                update();
+                              },
+                            ),
+                          ],
+                        ),
+                        selectedMode == Mode.cagr
+                            ? Row(
+                                children: [
+                                  InvestmentCardText(text: 'Time: '),
+                                  InputTextField(
+                                    textEditingController: _textEditingController3,
+                                    hintText: '2',
+                                    suffixText: 'YR',
+                                    onChanged: (value) {
+                                      String x = value;
+                                      try {
+                                        t = double.parse(x);
+                                      } catch (e) {
+                                        t = 0;
+                                      }
+                                      print(t);
+                                      update();
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                        SizedBox(height: 10),
+                        InvestmentCardText(text: 'Returns: ₹ $returns'),
+                        SizedBox(height: 10),
+                        InvestmentCardText(
+                            text:
+                                '${selectedMode == Mode.cagr ? 'CAGR: $res%' : 'Net Returns: $res%'}')
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(height: 10),
+                AdditionalDataCard(
+                  elevation: 5.0,
+                  title: 'CAGR',
+                  info:
+                      'The compound annual growth rate (CAGR) is the rate of return (RoR) that would be required for an investment to grow from its beginning balance to its ending balance, assuming the profits were reinvested at the end of each period of the investment’s life span.',
+                ),
+              ],
             ),
-            SizedBox(height: 10),
-            AdditionalDataCard(
-              elevation: 5.0,
-              title: 'CAGR?',
-              info:
-                  'The compound annual growth rate (CAGR) is the rate of return (RoR) that would be required for an investment to grow from its beginning balance to its ending balance, assuming the profits were reinvested at the end of each period of the investment’s life span.',
-            ),
-          ],
-        ),
+          );
+        }
       );
     });
   }

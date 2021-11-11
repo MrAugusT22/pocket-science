@@ -27,7 +27,7 @@ double sipCalculate(double p, double r, double t, bool sip) {
     x = (1+(r/100));
     m = p*pow(x, t);
   }
-  print(m);
+  // print(m);
   return m;
 }
 

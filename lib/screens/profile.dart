@@ -50,7 +50,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         Color pickerColor = Color(0xff443a49);
         Color currentColor = Color(0xff443a49);
 
-        List myColorPickerList = [
+        List<Widget> myColorPickerList = [
           GestureDetector(
             onTap: () async {
               void changeColor(Color color) {
@@ -114,7 +114,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 ),
                 borderRadius: BorderRadius.circular(20),
               ),
-              constraints: BoxConstraints.tightFor(width: 56, height: 56),
+              // constraints: BoxConstraints.tightFor(width: 56, height: 56),
             ),
           ),
           MyColorPicker(color: Colors.blue),
@@ -173,22 +173,50 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                     color: Colors.transparent,
                     child: Container(
                       constraints: BoxConstraints.tightFor(
-                        height: 96,
+                        height: MediaQuery.of(context).size.width - 20,
                       ),
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: _isDarkMode ? kMyDarkBGColor : Colors.white),
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        separatorBuilder: (context, index) {
-                          return SizedBox(width: 5);
-                        },
-                        physics: BouncingScrollPhysics(),
-                        itemCount: myColorPickerList.length,
-                        itemBuilder: (context, index) {
-                          return myColorPickerList[index];
-                        },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(child: myColorPickerList[0]),
+                                SizedBox(width: 10),
+                                Expanded(child: myColorPickerList[1]),
+                                SizedBox(width: 10),
+                                Expanded(child: myColorPickerList[2]),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(child: myColorPickerList[3]),
+                                SizedBox(width: 10),
+                                Expanded(child: myColorPickerList[4]),
+                                SizedBox(width: 10),
+                                Expanded(child: myColorPickerList[5]),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(child: myColorPickerList[6]),
+                                SizedBox(width: 10),
+                                Expanded(child: myColorPickerList[7]),
+                                SizedBox(width: 10),
+                                Expanded(child: myColorPickerList[8]),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -201,3 +229,15 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
     );
   }
 }
+
+// ListView.separated(
+//                         scrollDirection: Axis.horizontal,
+//                         separatorBuilder: (context, index) {
+//                           return SizedBox(width: 5);
+//                         },
+//                         physics: BouncingScrollPhysics(),
+//                         itemCount: myColorPickerList.length,
+//                         itemBuilder: (context, index) {
+//                           return myColorPickerList[index];
+//                         },
+//                       ),

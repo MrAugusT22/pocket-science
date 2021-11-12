@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:fin_calc/screens/calculators.dart';
+import 'package:fin_calc/screens/currency.dart';
 import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/profile.dart';
 import 'package:fin_calc/utilities/user_data.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     Sip(),
     Cagr(),
     Emi(),
-    Dashboard(),
+    Currency(),
     Profile(),
   ];
 
@@ -110,8 +111,8 @@ class _HomePageState extends State<HomePage> {
               BottomNavyBarItem(
                 icon: Padding(
                   padding: EdgeInsets.all(5),
-                  child: _currentIndex == 3
-                      ? Icon(Icons.settings)
+                  child: _currentIndex == 4
+                      ? Icon(Icons.settings_rounded)
                       : Icon(Icons.settings_outlined),
                 ),
                 title: Text('Settings'),

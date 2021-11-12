@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/doughnut_chart.dart';
+import 'package:fin_calc/utilities/investment_textfield.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_calc/utilities/constants.dart';
@@ -25,6 +26,8 @@ class Sip extends StatefulWidget {
 }
 
 class _SipState extends State<Sip> {
+  TextEditingController _textEditingController = TextEditingController();
+
   double p = 5000;
   double r = 10;
   double t = 5;
@@ -59,7 +62,7 @@ class _SipState extends State<Sip> {
       res = format(amt, 2);
       investment = format(inv, 2);
       returns = format(ret, 2);
-      inflation_amt = amt*pow((1 + 6 / 100), t * (-1)).toDouble();
+      inflation_amt = amt * pow((1 + 6 / 100), t * (-1)).toDouble();
       inflation_amt1 = format(inflation_amt, 2);
     } else {
       inv = p;
@@ -68,7 +71,7 @@ class _SipState extends State<Sip> {
       res = format(amt, 2);
       investment = format(inv, 2);
       returns = format(ret, 2);
-      inflation_amt = amt*pow((1 + 6 / 100), t * (-1)).toDouble();
+      inflation_amt = amt * pow((1 + 6 / 100), t * (-1)).toDouble();
       inflation_amt1 = format(inflation_amt, 2);
     }
     _chartData = getChartData();
@@ -185,8 +188,8 @@ class _SipState extends State<Sip> {
                             ),
                             child: Slider(
                               label: '${p.toInt()}',
-                              divisions: 399,
-                              min: 500,
+                              divisions: 199,
+                              min: 1000,
                               max: 200000,
                               value: p,
                               onChanged: (value) {
@@ -298,9 +301,8 @@ class _SipState extends State<Sip> {
                           SizedBox(height: 10),
                           InvestmentCardText(
                               text: 'Inflation Adjusted Amt (6%)'),
-                              SizedBox(height: 10),
-                          InvestmentCardText(
-                              text: '$inflation_amt1'),
+                          SizedBox(height: 10),
+                          InvestmentCardText(text: '₹ $inflation_amt1'),
                         ],
                       ),
                     ),

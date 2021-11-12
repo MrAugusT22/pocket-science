@@ -15,7 +15,7 @@ class MyColorPicker extends StatelessWidget {
           myThemeData.updateMyColor(color);
         },
         child: Container(
-          constraints: BoxConstraints.tightFor(width: 56, height: 56),
+          // constraints: BoxConstraints.tightFor(width: 56, height: 56),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(20),

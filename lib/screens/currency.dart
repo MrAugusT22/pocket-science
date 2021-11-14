@@ -30,7 +30,17 @@ class Currency extends StatefulWidget {
 
 class _CurrencyState extends State<Currency> {
   String api = 'F6934F8F-FDAF-4365-8E7B-1C30D460DE8C';
-  List<String> cryptoList = ['USD', 'EUR', 'GBP', 'JPY', 'BTC', 'ETH', 'LTC', 'SOL', 'ADA'];
+  List<String> cryptoList = [
+    'USD',
+    'EUR',
+    'GBP',
+    'JPY',
+    'BTC',
+    'ETH',
+    'LTC',
+    'SOL',
+    'ADA'
+  ];
 
   String coinAPIURL = 'https://rest.coinapi.io/v1/exchangerate';
   bool isWaiting = true;
@@ -49,6 +59,9 @@ class _CurrencyState extends State<Currency> {
         rate = format(price, 2);
       } else {
         print(response.statusCode);
+        setState(() {
+          isWaiting = false;
+        });
         throw 'Problem with the get request';
       }
       cryptoPrices[crypto] = rate;

@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     Sip(),
     Cagr(),
     Emi(),
-    Currency(),
+    // Currency(),
     Profile(),
   ];
 
@@ -96,22 +96,22 @@ class _HomePageState extends State<HomePage> {
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.white54,
               ),
+              // BottomNavyBarItem(
+              //   icon: Padding(
+              //     padding: EdgeInsets.all(5),
+              //     child: _currentIndex == 3
+              //         ? Icon(Icons.paid_rounded)
+              //         : Icon(Icons.paid_outlined),
+              //   ),
+              //   title: Text('Cryptos'),
+              //   activeColor: Colors.white,
+              //   textAlign: TextAlign.center,
+              //   inactiveColor: Colors.white54,
+              // ),
               BottomNavyBarItem(
                 icon: Padding(
                   padding: EdgeInsets.all(5),
                   child: _currentIndex == 3
-                      ? Icon(Icons.paid_rounded)
-                      : Icon(Icons.paid_outlined),
-                ),
-                title: Text('Cryptos'),
-                activeColor: Colors.white,
-                textAlign: TextAlign.center,
-                inactiveColor: Colors.white54,
-              ),
-              BottomNavyBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: _currentIndex == 4
                       ? Icon(Icons.settings_rounded)
                       : Icon(Icons.settings_outlined),
                 ),

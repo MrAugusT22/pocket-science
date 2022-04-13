@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/doughnut_chart.dart';
 import 'package:fin_calc/utilities/investment_textfield.dart';

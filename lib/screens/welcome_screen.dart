@@ -128,15 +128,30 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     ),
                     SizedBox(height: 20),
                     Center(
-                      child: Text(
-                        '$kMyAppName',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'RobotoMono',
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Pocket',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'RobotoMono',
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Science',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'RobotoMono',
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic),
+                          ),
+                        ],
                       ),
                     ),
                   ],

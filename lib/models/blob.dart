@@ -18,7 +18,7 @@ class Blob extends StatelessWidget {
       child: Transform.rotate(
         angle: rotation,
         child: Container(
-          constraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+          constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.only(

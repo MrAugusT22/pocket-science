@@ -28,6 +28,7 @@ class Sip extends StatefulWidget {
 class _SipState extends State<Sip> {
   TextEditingController _textEditingController = TextEditingController();
 
+  double i = 6;
   double p = 5000;
   double r = 10;
   double t = 5;
@@ -62,7 +63,7 @@ class _SipState extends State<Sip> {
       res = format(amt, 2);
       investment = format(inv, 2);
       returns = format(ret, 2);
-      inflation_amt = amt * pow((1 + 6 / 100), t * (-1)).toDouble();
+      inflation_amt = amt * pow((1 + i / 100), t * (-1)).toDouble();
       inflation_amt1 = format(inflation_amt, 2);
     } else {
       inv = p;
@@ -299,8 +300,50 @@ class _SipState extends State<Sip> {
                             ],
                           ),
                           SizedBox(height: 10),
+                          // Inflation
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InvestmentCardText(
+                                text: 'Inflation',
+                              ),
+                              InvestmentCardText(
+                                text: '$i %',
+                              ),
+                            ],
+                          ),
+                          SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              activeTrackColor: kMyColor,
+                              inactiveTrackColor:
+                                  _isDarkMode ? Colors.white12 : Colors.black54,
+                              trackShape: RoundedRectSliderTrackShape(),
+                              trackHeight: 4.0,
+                              activeTickMarkColor: Colors.transparent,
+                              inactiveTickMarkColor: Colors.transparent,
+                              valueIndicatorColor: kMyColor,
+                              thumbColor: kMyColor,
+                              overlayColor: kMyColor.withAlpha(32),
+                            ),
+                            child: Slider(
+                              label: '$i',
+                              divisions: 18,
+                              min: 1,
+                              max: 10,
+                              value: i,
+                              onChanged: (value) {
+                                HapticFeedback.mediumImpact();
+                                setState(() {
+                                  print(value);
+                                  i = value;
+                                  print(value);
+                                  update();
+                                });
+                              },
+                            ),
+                          ),
                           InvestmentCardText(
-                              text: 'Inflation Adjusted Amt (6%)'),
+                              text: 'Adjusted Amt'),
                           SizedBox(height: 10),
                           InvestmentCardText(text: '₹ $inflation_amt1'),
                         ],

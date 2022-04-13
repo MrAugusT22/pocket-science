@@ -129,7 +129,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     SizedBox(height: 20),
                     Center(
                       child: Text(
-                        'Wealthify',
+                        '$kMyAppName',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'RobotoMono',

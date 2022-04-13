@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-const kMyAppName = 'Wealthy Me';
+const kMyAppName = 'Pocket Science';
 const kMyImage = 'images/pig.jpg';
 
 String mon = '';

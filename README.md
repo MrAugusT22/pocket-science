@@ -1,6 +1,6 @@
-# fin_calc
+# pocket-science
 
-A new Flutter project.
+A new Flutter project. An app which can help you make sound financial decisions. Use it to calculate your future networth, EMIs and much more.
 
 ## Getting Started
 

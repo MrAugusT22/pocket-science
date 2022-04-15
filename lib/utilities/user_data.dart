@@ -148,7 +148,7 @@ class ThemePreferences {
 
   getAccentColor() async {
     final prefs = await SharedPreferences.getInstance();
-    final color = prefs.getString('color') ?? 'FF2196F3FF';
+    final color = prefs.getString('color') ?? 'FF2196F3';
     return color;
   }
 }

@@ -57,16 +57,21 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: kMyColor,
             items: <BottomNavyBarItem>[
               BottomNavyBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: _currentIndex == 0
-                        ? Icon(Icons.payments_rounded)
-                        : Icon(Icons.payments_outlined),
-                  ),
-                  title: Text('SIP'),
-                  activeColor: Colors.white,
-                  textAlign: TextAlign.center,
-                  inactiveColor: Colors.white54),
+                icon: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: _currentIndex == 0
+                      ? Icon(Icons.payments_rounded)
+                      : Icon(Icons.payments_outlined),
+                ),
+                title: Text('SIP'),
+                activeColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Colors.white,
+                textAlign: TextAlign.center,
+                inactiveColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black54
+                    : Colors.white54,
+              ),
               BottomNavyBarItem(
                 icon: Padding(
                   padding: EdgeInsets.all(5),
@@ -75,9 +80,13 @@ class _HomePageState extends State<HomePage> {
                       : Icon(Icons.savings_outlined),
                 ),
                 title: Text('CAGR'),
-                activeColor: Colors.white,
+                activeColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Colors.white,
                 textAlign: TextAlign.center,
-                inactiveColor: Colors.white54,
+                inactiveColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black54
+                    : Colors.white54,
               ),
               BottomNavyBarItem(
                 icon: Padding(
@@ -89,9 +98,13 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   'EMI',
                 ),
-                activeColor: Colors.white,
+                activeColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Colors.white,
                 textAlign: TextAlign.center,
-                inactiveColor: Colors.white54,
+                inactiveColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black54
+                    : Colors.white54,
               ),
               // BottomNavyBarItem(
               //   icon: Padding(
@@ -113,9 +126,13 @@ class _HomePageState extends State<HomePage> {
                       : Icon(Icons.settings_outlined),
                 ),
                 title: Text('Settings'),
-                activeColor: Colors.white,
+                activeColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Colors.white,
                 textAlign: TextAlign.center,
-                inactiveColor: Colors.white54,
+                inactiveColor: kMyColor.computeLuminance() > 0.5
+                    ? Colors.black54
+                    : Colors.white54,
               ),
             ],
           ),

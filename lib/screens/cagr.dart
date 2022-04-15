@@ -108,7 +108,7 @@ class _CagrState extends State<Cagr> {
                                 textSize: 15.0,
                                 arrow: false,
                                 center: true,
-                                color: selectedMode == Mode.cagr
+                                buttonColor: selectedMode == Mode.cagr
                                     ? kMyColor
                                     : _isDarkMode
                                         ? kMyDarkBGColor
@@ -128,7 +128,7 @@ class _CagrState extends State<Cagr> {
                                 textSize: 15.0,
                                 arrow: false,
                                 center: true,
-                                color: selectedMode == Mode.total
+                                buttonColor: selectedMode == Mode.total
                                     ? kMyColor
                                     : _isDarkMode
                                         ? kMyDarkBGColor

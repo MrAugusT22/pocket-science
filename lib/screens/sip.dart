@@ -129,7 +129,7 @@ class _SipState extends State<Sip> {
                                   textSize: 15.0,
                                   arrow: false,
                                   center: true,
-                                  color: selectedMode == Mode.sip
+                                  buttonColor: selectedMode == Mode.sip
                                       ? kMyColor
                                       : _isDarkMode
                                           ? kMyDarkBGColor
@@ -149,7 +149,7 @@ class _SipState extends State<Sip> {
                                   textSize: 15.0,
                                   arrow: false,
                                   center: true,
-                                  color: selectedMode == Mode.cagr
+                                  buttonColor: selectedMode == Mode.cagr
                                       ? kMyColor
                                       : _isDarkMode
                                           ? kMyDarkBGColor
@@ -341,9 +341,7 @@ class _SipState extends State<Sip> {
                             ),
                           ),
                           InvestmentCardText(
-                              text: 'Adjusted Amt'),
-                          SizedBox(height: 10),
-                          InvestmentCardText(text: '₹ $inflationAmt1'),
+                              text: 'Adjusted Amt: ₹ $inflationAmt1'),
                         ],
                       ),
                     ),

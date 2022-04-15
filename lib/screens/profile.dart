@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Profile extends StatefulWidget {
   static const String id = 'profile';
@@ -15,6 +16,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> with TickerProviderStateMixin {
+  bool value = true;
+
   List<Color> colorList = [
     Colors.red,
     Colors.blue,
@@ -45,8 +48,8 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         bool _isDarkMode = myThemeData.getDarkMode;
         Color kMyColor = myThemeData.getMyColor;
 
-        Color pickerColor = Color(0xff443a49);
-        Color currentColor = Color(0xff443a49);
+        Color pickerColor = Color(0xff13a6a8);
+        Color currentColor = Color(0xff13a6a8);
 
         List<Widget> myColorPickerList = [
           GestureDetector(
@@ -120,9 +123,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
           MyColorPicker(color: Colors.red),
           MyColorPicker(color: Colors.cyan),
           MyColorPicker(color: Colors.yellow),
-          MyColorPicker(color: Colors.black),
-          MyColorPicker(color: Colors.white),
-          MyColorPicker(color: Colors.amber),
         ];
 
         return SafeArea(
@@ -132,35 +132,42 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.transparent,
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: _isDarkMode ? kMyDarkBGColor : Colors.white),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(_isDarkMode
-                                  ? Icons.bedtime_rounded
-                                  : Icons.bedtime_outlined),
-                              SizedBox(width: 10),
-                              InvestmentCardText(text: 'Dark Mode'),
-                            ],
-                          ),
-                          CupertinoSwitch(
-                            activeColor: kMyColor,
-                            value: _isDarkMode,
-                            onChanged: (value) {
-                              myThemeData.toggleDarkMode(value);
-                            },
-                          ),
-                        ],
+                  GestureDetector(
+                    onTap: () {
+                      print("tapp");
+                      value = !value;
+                      myThemeData.toggleDarkMode(value);
+                    },
+                    child: Material(
+                      elevation: 5,
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.transparent,
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: _isDarkMode ? kMyDarkBGColor : Colors.white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(_isDarkMode
+                                    ? Icons.bedtime_rounded
+                                    : Icons.bedtime_outlined),
+                                SizedBox(width: 10),
+                                InvestmentCardText(text: 'Dark Mode'),
+                              ],
+                            ),
+                            CupertinoSwitch(
+                              activeColor: kMyColor,
+                              value: _isDarkMode,
+                              onChanged: (value) {
+                                myThemeData.toggleDarkMode(value);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -177,45 +184,120 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: _isDarkMode ? kMyDarkBGColor : Colors.white),
-                      child: Column(
+                      child: StaggeredGrid.count(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
                         children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Expanded(child: myColorPickerList[0]),
-                                SizedBox(width: 10),
-                                Expanded(child: myColorPickerList[1]),
-                                SizedBox(width: 10),
-                                Expanded(child: myColorPickerList[2]),
-                              ],
-                            ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: 2,
+                            mainAxisCellCount: 2,
+                            child: myColorPickerList[0],
                           ),
-                          SizedBox(height: 10),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Expanded(child: myColorPickerList[3]),
-                                SizedBox(width: 10),
-                                Expanded(child: myColorPickerList[4]),
-                                SizedBox(width: 10),
-                                Expanded(child: myColorPickerList[5]),
-                              ],
-                            ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: 1,
+                            mainAxisCellCount: 1,
+                            child: myColorPickerList[1],
                           ),
-                          SizedBox(height: 10),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Expanded(child: myColorPickerList[6]),
-                                SizedBox(width: 10),
-                                Expanded(child: myColorPickerList[7]),
-                                SizedBox(width: 10),
-                                Expanded(child: myColorPickerList[8]),
-                              ],
-                            ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: 1,
+                            mainAxisCellCount: 1,
+                            child: myColorPickerList[2],
+                          ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: 1,
+                            mainAxisCellCount: 1,
+                            child: myColorPickerList[3],
+                          ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: 1,
+                            mainAxisCellCount: 1,
+                            child: myColorPickerList[4],
+                          ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: 1,
+                            mainAxisCellCount: 1,
+                            child: myColorPickerList[5],
                           ),
                         ],
                       ),
+                      // child: Column(
+                      //   children: [
+                      //     Expanded(
+                      //       flex: 2,
+                      //       child: Row(
+                      //         children: [
+                      //           Expanded(flex: 2, child: myColorPickerList[0]),
+                      //           SizedBox(width: 10),
+                      //           Expanded(
+                      //             child: Column(
+                      //               children: [
+                      //                 Expanded(child: myColorPickerList[1]),
+                      //                 SizedBox(height: 10),
+                      //                 Expanded(child: myColorPickerList[2]),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     SizedBox(height: 10),
+                      //     Expanded(
+                      //       child: Row(
+                      //         children: [
+                      //           Expanded(child: myColorPickerList[3]),
+                      //           SizedBox(width: 10),
+                      //           Expanded(child: myColorPickerList[4]),
+                      //           SizedBox(width: 10),
+                      //           Expanded(child: myColorPickerList[5]),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     // SizedBox(height: 10),
+                      //     // Expanded(
+                      //     //   child: Row(
+                      //     //     children: [
+                      //     //       Expanded(child: myColorPickerList[5]),
+                      //     //       SizedBox(width: 10),
+                      //     //       Expanded(child: myColorPickerList[5]),
+                      //     //       SizedBox(width: 10),
+                      //     //       Expanded(child: myColorPickerList[5]),
+                      //     //     ],
+                      //     //   ),
+                      //     // ),
+                      //   ],
+                      // ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InvestmentCardText(
+                          text: 'Developer: Sahil Shetye',
+                          fontStyle: FontStyle.italic,
+                          color: _isDarkMode? Colors.white54 : Colors.black54,
+                          fontSize: 12.0,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(''),
+                        InvestmentCardText(
+                          text: 'Found a bug? Do let me know at',
+                          fontStyle: FontStyle.italic,
+                          color: _isDarkMode? Colors.white54 : Colors.black54,
+                          fontSize: 12.0,
+                          textAlign: TextAlign.center,
+                        ),
+                        InvestmentCardText(
+                          text: '\"sshetye466@gmail.com\"',
+                          fontStyle: FontStyle.italic,
+                          color: _isDarkMode? Colors.white54 : Colors.black54,
+                          fontSize: 12.0,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -227,15 +309,3 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
     );
   }
 }
-
-// ListView.separated(
-//                         scrollDirection: Axis.horizontal,
-//                         separatorBuilder: (context, index) {
-//                           return SizedBox(width: 5);
-//                         },
-//                         physics: BouncingScrollPhysics(),
-//                         itemCount: myColorPickerList.length,
-//                         itemBuilder: (context, index) {
-//                           return myColorPickerList[index];
-//                         },
-//                       ),

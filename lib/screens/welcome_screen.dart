@@ -129,7 +129,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             'Pocket',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.white,
+                                color: kMyColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
                                 fontFamily: 'RobotoMono',
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             'Science',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.white,
+                                color: kMyColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
                                 fontFamily: 'RobotoMono',
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
@@ -161,7 +161,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   HapticFeedback.mediumImpact();
                   getStarted();
                 },
-                color: kMyColor,
+                buttonColor: kMyColor,
+                  // textColor: kMyColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
               ),
             ),
           ],

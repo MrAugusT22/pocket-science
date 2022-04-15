@@ -6,7 +6,8 @@ class Button extends StatelessWidget {
   final arrow;
   final textSize;
   final center;
-  final color;
+  final buttonColor;
+  final textColor;
   
   Button({
     this.text,
@@ -14,7 +15,8 @@ class Button extends StatelessWidget {
     this.arrow = true,
     this.textSize = 30.0,
     this.center = false,
-    this.color,
+    this.textColor,
+    this.buttonColor,
   });
 
   @override
@@ -28,7 +30,7 @@ class Button extends StatelessWidget {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: color,
+          color: buttonColor,
         ),
         child: Row(
           mainAxisAlignment: center
@@ -42,6 +44,9 @@ class Button extends StatelessWidget {
                 fontFamily: 'RobotoMono',
                 fontSize: textSize,
                 fontWeight: FontWeight.bold,
+                color: buttonColor.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Colors.white,
               ),
             ),
             arrow

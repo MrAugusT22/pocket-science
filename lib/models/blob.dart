@@ -17,15 +17,23 @@ class Blob extends StatelessWidget {
       scale: scale,
       child: Transform.rotate(
         angle: rotation,
-        child: Container(
-          constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.only(
+        child: Material(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(150),
               topRight: Radius.circular(240),
               bottomLeft: Radius.circular(250),
-              bottomRight: Radius.circular(165),
+              bottomRight: Radius.circular(165)),
+          elevation: 5,
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(150),
+                topRight: Radius.circular(240),
+                bottomLeft: Radius.circular(250),
+                bottomRight: Radius.circular(165),
+              ),
             ),
           ),
         ),

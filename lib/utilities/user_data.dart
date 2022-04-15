@@ -1,7 +1,5 @@
-import 'dart:developer';
 import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData extends ChangeNotifier {

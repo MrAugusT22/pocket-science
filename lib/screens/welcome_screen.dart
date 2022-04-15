@@ -2,17 +2,12 @@ import 'package:fin_calc/models/blob.dart';
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/screens/home.dart';
 import 'package:fin_calc/utilities/constants.dart';
-import 'package:fin_calc/utilities/dialogbox.dart';
-import 'package:fin_calc/utilities/errors.dart';
-import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

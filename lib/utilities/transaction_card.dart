@@ -1,4 +1,3 @@
-import 'package:fin_calc/utilities/calculations.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/user_data.dart';

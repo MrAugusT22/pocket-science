@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/utilities/doughnut_chart.dart';
-import 'package:fin_calc/utilities/investment_textfield.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_calc/utilities/constants.dart';
@@ -38,8 +37,8 @@ class _SipState extends State<Sip> {
   String returns = '';
   String res = '';
 
-  double inflation_amt = 0;
-  String inflation_amt1 = '';
+  double inflationAmt = 0;
+  String inflationAmt1 = '';
 
   Mode selectedMode = Mode.sip;
   List<InvestmentData> _chartData = [];
@@ -62,8 +61,8 @@ class _SipState extends State<Sip> {
       res = format(amt, 2);
       investment = format(inv, 2);
       returns = format(ret, 2);
-      inflation_amt = amt * pow((1 + i / 100), t * (-1)).toDouble();
-      inflation_amt1 = format(inflation_amt, 2);
+      inflationAmt = amt * pow((1 + i / 100), t * (-1)).toDouble();
+      inflationAmt1 = format(inflationAmt, 2);
     } else {
       inv = p;
       amt = sipCalculate(p, r, t, sip);
@@ -71,8 +70,8 @@ class _SipState extends State<Sip> {
       res = format(amt, 2);
       investment = format(inv, 2);
       returns = format(ret, 2);
-      inflation_amt = amt * pow((1 + 6 / 100), t * (-1)).toDouble();
-      inflation_amt1 = format(inflation_amt, 2);
+      inflationAmt = amt * pow((1 + 6 / 100), t * (-1)).toDouble();
+      inflationAmt1 = format(inflationAmt, 2);
     }
     _chartData = getChartData();
   }
@@ -344,7 +343,7 @@ class _SipState extends State<Sip> {
                           InvestmentCardText(
                               text: 'Adjusted Amt'),
                           SizedBox(height: 10),
-                          InvestmentCardText(text: '₹ $inflation_amt1'),
+                          InvestmentCardText(text: '₹ $inflationAmt1'),
                         ],
                       ),
                     ),

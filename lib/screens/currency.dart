@@ -132,7 +132,6 @@ class CryptoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
       bool _isDarkMode = myThemeData.getDarkMode;
-      Color kMyColor = myThemeData.getMyColor;
 
       return Material(
         elevation: 5,

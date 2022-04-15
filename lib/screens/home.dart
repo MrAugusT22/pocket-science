@@ -1,7 +1,4 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:fin_calc/screens/calculators.dart';
-import 'package:fin_calc/screens/currency.dart';
-import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/profile.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';

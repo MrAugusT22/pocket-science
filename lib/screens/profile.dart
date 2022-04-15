@@ -1,5 +1,3 @@
-import 'package:fin_calc/models/button.dart';
-import 'package:fin_calc/screens/welcome_screen.dart';
 import 'package:fin_calc/utilities/constants.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/my_color_picker.dart';

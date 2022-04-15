@@ -134,7 +134,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print("tapp");
                       value = !value;
                       myThemeData.toggleDarkMode(value);
                     },
@@ -221,52 +220,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      // child: Column(
-                      //   children: [
-                      //     Expanded(
-                      //       flex: 2,
-                      //       child: Row(
-                      //         children: [
-                      //           Expanded(flex: 2, child: myColorPickerList[0]),
-                      //           SizedBox(width: 10),
-                      //           Expanded(
-                      //             child: Column(
-                      //               children: [
-                      //                 Expanded(child: myColorPickerList[1]),
-                      //                 SizedBox(height: 10),
-                      //                 Expanded(child: myColorPickerList[2]),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     SizedBox(height: 10),
-                      //     Expanded(
-                      //       child: Row(
-                      //         children: [
-                      //           Expanded(child: myColorPickerList[3]),
-                      //           SizedBox(width: 10),
-                      //           Expanded(child: myColorPickerList[4]),
-                      //           SizedBox(width: 10),
-                      //           Expanded(child: myColorPickerList[5]),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     // SizedBox(height: 10),
-                      //     // Expanded(
-                      //     //   child: Row(
-                      //     //     children: [
-                      //     //       Expanded(child: myColorPickerList[5]),
-                      //     //       SizedBox(width: 10),
-                      //     //       Expanded(child: myColorPickerList[5]),
-                      //     //       SizedBox(width: 10),
-                      //     //       Expanded(child: myColorPickerList[5]),
-                      //     //     ],
-                      //     //   ),
-                      //     // ),
-                      //   ],
-                      // ),
                     ),
                   ),
                   Expanded(

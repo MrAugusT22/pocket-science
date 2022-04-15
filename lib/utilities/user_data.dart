@@ -53,15 +53,6 @@ class UserData extends ChangeNotifier {
     );
   }
 
-  Color get getMyColor {
-    return kMyColor;
-  }
-
-  void updateMyColor(Color color) {
-    kMyColor = color;
-    notifyListeners();
-  }
-
   bool get getCancelStatus {
     return cancel;
   }
@@ -115,6 +106,25 @@ class UserData extends ChangeNotifier {
     _isDarkMode = await _themePreferences.getTheme();
     notifyListeners();
   }
+
+  Color get getMyColor {
+    return kMyColor;
+  }
+
+  void updateMyColor(Color color) {
+    kMyColor = color;
+    String value = color.value.toRadixString(16);
+    _themePreferences.setAccentColor(value);
+    notifyListeners();
+  }
+
+  void getAccentColor() async {
+    String value = await _themePreferences.getAccentColor();
+    int hexColor = int.parse(value, radix: 16);
+    print(hexColor);
+    kMyColor = Color(hexColor);
+    notifyListeners();
+  }
 }
 
 class ThemePreferences {
@@ -128,5 +138,17 @@ class ThemePreferences {
   getTheme() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getBool(PREF_KEY) ?? false;
+  }
+
+  setAccentColor(String color) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('color', color);
+    print('color set');
+  }
+
+  getAccentColor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final color = prefs.getString('color') ?? 'FF2196F3FF';
+    return color;
   }
 }

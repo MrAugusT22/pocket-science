@@ -31,6 +31,7 @@ class FinCalc extends StatelessWidget {
       create: (context) => UserData(),
       child: Consumer<UserData>(
         builder: (context, myThemeData, child) {
+          myThemeData.getAccentColor();
           return MaterialApp(
             theme: myThemeData.getDarkMode ? kMyDarkTheme : kMyLightTheme,
             initialRoute: WelcomeScreen.id, //googleUserSign ? HomePage.id : WelcomeScreen.id,

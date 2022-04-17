@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class Button extends StatelessWidget {
   final text;
@@ -25,6 +26,7 @@ class Button extends StatelessWidget {
       onPressed: onPressed,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       fillColor: Colors.transparent,
+      elevation: 5,
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(20),

@@ -1,4 +1,3 @@
-import 'package:fin_calc/utilities/transaction_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,27 +8,10 @@ class UserData extends ChangeNotifier {
 
   UserData() {
     _isDarkMode = true;
-    kMyColor = Colors.blue;
+    kMyColor = Color(0xff13a6a8);
     _themePreferences = ThemePreferences();
     getPreferences();
   }
-
-  List _purchaseTypeList = [
-    'Food',
-    'Travel',
-    'Medicine',
-    'Housing',
-    'Personal',
-    'Bill',
-    'Self Transfer',
-  ];
-
-  List _transactionTypesList = [
-    'Credit',
-    'Debit',
-  ];
-
-  List<TransactionCard> _transactions = [];
 
   String mon = '';
   int date = 0;
@@ -62,36 +44,6 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTransaction(int index) {
-    _transactions.removeAt(index);
-    notifyListeners();
-  }
-
-  List get getDate {
-    return [mon, date, monYr];
-  }
-
-  List get getPurchaseTypes {
-    return _purchaseTypeList;
-  }
-
-  List get getTransactionTypesList {
-    return _transactionTypesList;
-  }
-
-  List<TransactionCard> get getTransactions {
-    return _transactions;
-  }
-
-  void addTransactions(TransactionCard transactionCard) {
-    _transactions.add(transactionCard);
-    notifyListeners();
-  }
-
-  void cancelTransaction() {
-    _transactions.removeLast();
-  }
-
   bool get getDarkMode {
     return _isDarkMode;
   }
@@ -121,7 +73,6 @@ class UserData extends ChangeNotifier {
   void getAccentColor() async {
     String value = await _themePreferences.getAccentColor();
     int hexColor = int.parse(value, radix: 16);
-    print(hexColor);
     kMyColor = Color(hexColor);
     notifyListeners();
   }
@@ -143,7 +94,6 @@ class ThemePreferences {
   setAccentColor(String color) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('color', color);
-    print('color set');
   }
 
   getAccentColor() async {

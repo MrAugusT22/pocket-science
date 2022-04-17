@@ -5,6 +5,7 @@ import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -93,29 +94,37 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
               );
               myThemeData.updateMyColor(pickerColor);
             },
-            child: AnimatedContainer(
-              duration: Duration(seconds: 2),
-              onEnd: () {
-                setState(() {
-                  index = index + 1;
-                  // animate the color
-                  bottomColor = colorList[index % colorList.length];
-                  topColor = colorList[(index + 1) % colorList.length];
-
-                  //// animate the alignment
-                  begin = alignmentList[index % alignmentList.length];
-                  end = alignmentList[(index + 2) % alignmentList.length];
-                });
-              },
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: begin,
-                  end: end,
-                  colors: [bottomColor, topColor],
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Material(
+                elevation: 5,
                 borderRadius: BorderRadius.circular(20),
+                color: Colors.transparent,
+                child: AnimatedContainer(
+                  duration: Duration(seconds: 2),
+                  onEnd: () {
+                    setState(() {
+                      index = index + 1;
+                      // animate the color
+                      bottomColor = colorList[index % colorList.length];
+                      topColor = colorList[(index + 1) % colorList.length];
+
+                      //// animate the alignment
+                      begin = alignmentList[index % alignmentList.length];
+                      end = alignmentList[(index + 2) % alignmentList.length];
+                    });
+                  },
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: begin,
+                      end: end,
+                      colors: [bottomColor, topColor],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  // constraints: BoxConstraints.tightFor(width: 56, height: 56),
+                ),
               ),
-              // constraints: BoxConstraints.tightFor(width: 56, height: 56),
             ),
           ),
           MyColorPicker(color: Colors.blue),
@@ -129,7 +138,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   GestureDetector(
@@ -137,89 +146,79 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       value = !value;
                       myThemeData.toggleDarkMode(value);
                     },
-                    child: Material(
-                      elevation: 5,
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.transparent,
-                      child: Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: _isDarkMode ? kMyDarkBGColor : Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(_isDarkMode
-                                    ? Icons.bedtime_rounded
-                                    : Icons.bedtime_outlined),
-                                SizedBox(width: 10),
-                                InvestmentCardText(text: 'Dark Mode'),
-                              ],
-                            ),
-                            CupertinoSwitch(
-                              activeColor: kMyColor,
-                              value: _isDarkMode,
-                              onChanged: (value) {
-                                myThemeData.toggleDarkMode(value);
-                              },
-                            ),
-                          ],
-                        ),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(_isDarkMode
+                                  ? Icons.bedtime_rounded
+                                  : Icons.bedtime_outlined),
+                              SizedBox(width: 10),
+                              InvestmentCardText(text: 'Dark Mode'),
+                            ],
+                          ),
+                          CupertinoSwitch(
+                            activeColor: kMyColor,
+                            value: _isDarkMode,
+                            onChanged: (value) {
+                              myThemeData.toggleDarkMode(value);
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   SizedBox(height: 10),
-                  Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.transparent,
-                    child: Container(
-                      constraints: BoxConstraints.tightFor(
-                        height: MediaQuery.of(context).size.width - 20,
-                      ),
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: _isDarkMode ? kMyDarkBGColor : Colors.white),
-                      child: StaggeredGrid.count(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        children: [
-                          StaggeredGridTile.count(
-                            crossAxisCellCount: 2,
-                            mainAxisCellCount: 2,
-                            child: myColorPickerList[0],
-                          ),
-                          StaggeredGridTile.count(
-                            crossAxisCellCount: 1,
-                            mainAxisCellCount: 1,
-                            child: myColorPickerList[1],
-                          ),
-                          StaggeredGridTile.count(
-                            crossAxisCellCount: 1,
-                            mainAxisCellCount: 1,
-                            child: myColorPickerList[2],
-                          ),
-                          StaggeredGridTile.count(
-                            crossAxisCellCount: 1,
-                            mainAxisCellCount: 1,
-                            child: myColorPickerList[3],
-                          ),
-                          StaggeredGridTile.count(
-                            crossAxisCellCount: 1,
-                            mainAxisCellCount: 1,
-                            child: myColorPickerList[4],
-                          ),
-                          StaggeredGridTile.count(
-                            crossAxisCellCount: 1,
-                            mainAxisCellCount: 1,
-                            child: myColorPickerList[5],
-                          ),
-                        ],
-                      ),
+                  Container(
+                    constraints: BoxConstraints.tightFor(
+                      height: MediaQuery.of(context).size.width - 15,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
+                    child: StaggeredGrid.count(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 0,
+                      crossAxisSpacing: 0,
+                      children: [
+                        StaggeredGridTile.count(
+                          crossAxisCellCount: 2,
+                          mainAxisCellCount: 2,
+                          child: myColorPickerList[0],
+                        ),
+                        StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: myColorPickerList[1],
+                        ),
+                        StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: myColorPickerList[2],
+                        ),
+                        StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: myColorPickerList[3],
+                        ),
+                        StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: myColorPickerList[4],
+                        ),
+                        StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: myColorPickerList[5],
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -231,23 +230,23 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                         InvestmentCardText(
                           text: 'Developer: Sahil Shetye',
                           fontStyle: FontStyle.italic,
-                          color: _isDarkMode? Colors.white54 : Colors.black54,
-                          fontSize: 12.0,
+                          color: _isDarkMode ? Colors.white54 : Colors.black54,
+                          fontSize: 10.0,
                           textAlign: TextAlign.center,
                         ),
                         Text(''),
                         InvestmentCardText(
                           text: 'Found a bug? Do let me know at',
                           fontStyle: FontStyle.italic,
-                          color: _isDarkMode? Colors.white54 : Colors.black54,
-                          fontSize: 12.0,
+                          color: _isDarkMode ? Colors.white54 : Colors.black54,
+                          fontSize: 10.0,
                           textAlign: TextAlign.center,
                         ),
                         InvestmentCardText(
                           text: '\"sshetye466@gmail.com\"',
                           fontStyle: FontStyle.italic,
-                          color: _isDarkMode? Colors.white54 : Colors.black54,
-                          fontSize: 12.0,
+                          color: _isDarkMode ? Colors.white54 : Colors.black54,
+                          fontSize: 10.0,
                           textAlign: TextAlign.center,
                         ),
                       ],

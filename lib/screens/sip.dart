@@ -99,256 +99,244 @@ class _SipState extends State<Sip> {
           itemCount: 1,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.transparent,
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color:
-                              _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Button(
-                                  text: 'SIP',
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedMode = Mode.sip;
-                                      update();
-                                    });
-                                  },
-                                  textSize: 15.0,
-                                  arrow: false,
-                                  center: true,
-                                  buttonColor: selectedMode == Mode.sip
-                                      ? kMyColor
-                                      : _isDarkMode
-                                          ? kMyDarkBGColor
-                                          : kMyLightBGColor,
-                                ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Button(
+                                text: 'SIP',
+                                onPressed: () {
+                                  setState(() {
+                                    selectedMode = Mode.sip;
+                                    update();
+                                  });
+                                },
+                                textSize: 15.0,
+                                arrow: false,
+                                center: true,
+                                buttonColor: selectedMode == Mode.sip
+                                    ? kMyColor
+                                    : _isDarkMode
+                                        ? kMyDarkBGColor
+                                        : kMyLightBGColor,
                               ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: Button(
-                                  text: 'Lumpsump',
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedMode = Mode.cagr;
-                                      update();
-                                    });
-                                  },
-                                  textSize: 15.0,
-                                  arrow: false,
-                                  center: true,
-                                  buttonColor: selectedMode == Mode.cagr
-                                      ? kMyColor
-                                      : _isDarkMode
-                                          ? kMyDarkBGColor
-                                          : kMyLightBGColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InvestmentCardText(
-                                text:
-                                    '${selectedMode == Mode.sip ? 'Monthly SIP' : 'Total Investment'}',
-                              ),
-                              InvestmentCardText(
-                                text: '₹ ${p.ceil().toInt()}',
-                              ),
-                            ],
-                          ),
-                          //Monthly SIP
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: kMyColor,
-                              inactiveTrackColor:
-                                  _isDarkMode ? Colors.white12 : Colors.black54,
-                              trackShape: RoundedRectSliderTrackShape(),
-                              trackHeight: 4.0,
-                              activeTickMarkColor: Colors.transparent,
-                              inactiveTickMarkColor: Colors.transparent,
-                              valueIndicatorColor: kMyColor,
-                              thumbColor: kMyColor,
-                              overlayColor: kMyColor.withAlpha(32),
                             ),
-                            child: Slider(
-                              label: '${p.toInt()}',
-                              divisions: 199,
-                              min: 1000,
-                              max: 200000,
-                              value: p,
-                              onChanged: (value) {
-                                HapticFeedback.mediumImpact();
-                                setState(() {
-                                  print(value);
-                                  p = value;
-                                  print(value);
-                                  update();
-                                });
-                              },
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InvestmentCardText(
-                                text: 'Expected Returns',
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Button(
+                                text: 'Lumpsump',
+                                onPressed: () {
+                                  setState(() {
+                                    selectedMode = Mode.cagr;
+                                    update();
+                                  });
+                                },
+                                textSize: 15.0,
+                                arrow: false,
+                                center: true,
+                                buttonColor: selectedMode == Mode.cagr
+                                    ? kMyColor
+                                    : _isDarkMode
+                                        ? kMyDarkBGColor
+                                        : kMyLightBGColor,
                               ),
-                              InvestmentCardText(
-                                text: '${r.ceil().toInt()} %',
-                              ),
-                            ],
-                          ),
-                          //Expected Returns
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: kMyColor,
-                              inactiveTrackColor:
-                                  _isDarkMode ? Colors.white12 : Colors.black54,
-                              trackShape: RoundedRectSliderTrackShape(),
-                              trackHeight: 4.0,
-                              activeTickMarkColor: Colors.transparent,
-                              inactiveTickMarkColor: Colors.transparent,
-                              valueIndicatorColor: kMyColor,
-                              thumbColor: kMyColor,
-                              overlayColor: kMyColor.withAlpha(32),
                             ),
-                            child: Slider(
-                              label: '${r.toInt()}',
-                              divisions: 29,
-                              min: 1,
-                              max: 30,
-                              value: r,
-                              onChanged: (value) {
-                                HapticFeedback.mediumImpact();
-                                setState(() {
-                                  print(value);
-                                  r = value;
-                                  print(value);
-                                  update();
-                                });
-                              },
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InvestmentCardText(
+                              text:
+                                  '${selectedMode == Mode.sip ? 'Monthly SIP' : 'Total Investment'}',
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InvestmentCardText(
-                                text: 'Time Period',
-                              ),
-                              InvestmentCardText(
-                                text: '${t.ceil().toInt()} Yr',
-                              ),
-                            ],
-                          ),
-                          //Time Period
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: kMyColor,
-                              inactiveTrackColor:
-                                  _isDarkMode ? Colors.white12 : Colors.black54,
-                              trackShape: RoundedRectSliderTrackShape(),
-                              trackHeight: 4.0,
-                              activeTickMarkColor: Colors.transparent,
-                              inactiveTickMarkColor: Colors.transparent,
-                              valueIndicatorColor: kMyColor,
-                              thumbColor: kMyColor,
-                              overlayColor: kMyColor.withAlpha(32),
+                            InvestmentCardText(
+                              text: '₹ ${p.ceil().toInt()}',
                             ),
-                            child: Slider(
-                              label: '${t.toInt()}',
-                              divisions: 29,
-                              min: 1,
-                              max: 30,
-                              value: t,
-                              onChanged: (value) {
-                                HapticFeedback.mediumImpact();
-                                setState(() {
-                                  print(value);
-                                  t = value;
-                                  print(value);
-                                  update();
-                                });
-                              },
+                          ],
+                        ),
+                        //Monthly SIP
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: kMyColor,
+                            inactiveTrackColor:
+                                _isDarkMode ? Colors.white12 : Colors.black12,
+                            trackShape: RoundedRectSliderTrackShape(),
+                            trackHeight: 4.0,
+                            activeTickMarkColor: Colors.transparent,
+                            inactiveTickMarkColor: Colors.transparent,
+                            valueIndicatorColor: kMyColor,
+                            thumbColor: kMyColor,
+                            overlayColor: kMyColor.withAlpha(32),
+                          ),
+                          child: Slider(
+                            label: '${p.toInt()}',
+                            divisions: 199,
+                            min: 1000,
+                            max: 200000,
+                            value: p,
+                            onChanged: (value) {
+                              HapticFeedback.mediumImpact();
+                              setState(() {
+                                print(value);
+                                p = value;
+                                print(value);
+                                update();
+                              });
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InvestmentCardText(
+                              text: 'Expected Returns',
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          DoughnutChart(
-                            tooltipBehavior: _tooltipBehavior,
-                            res: res,
-                            chartData: _chartData,
-                            centerTexts: [
-                              CircularChartAnnotation(
-                                widget: InvestmentCardText(text: '₹ $res'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          // Inflation
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InvestmentCardText(
-                                text: 'Inflation',
-                              ),
-                              InvestmentCardText(
-                                text: '$i %',
-                              ),
-                            ],
-                          ),
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: kMyColor,
-                              inactiveTrackColor:
-                                  _isDarkMode ? Colors.white12 : Colors.black54,
-                              trackShape: RoundedRectSliderTrackShape(),
-                              trackHeight: 4.0,
-                              activeTickMarkColor: Colors.transparent,
-                              inactiveTickMarkColor: Colors.transparent,
-                              valueIndicatorColor: kMyColor,
-                              thumbColor: kMyColor,
-                              overlayColor: kMyColor.withAlpha(32),
+                            InvestmentCardText(
+                              text: '${r.ceil().toInt()} %',
                             ),
-                            child: Slider(
-                              label: '$i',
-                              divisions: 18,
-                              min: 1,
-                              max: 10,
-                              value: i,
-                              onChanged: (value) {
-                                HapticFeedback.mediumImpact();
-                                setState(() {
-                                  print(value);
-                                  i = value;
-                                  print(value);
-                                  update();
-                                });
-                              },
-                            ),
+                          ],
+                        ),
+                        //Expected Returns
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: kMyColor,
+                            inactiveTrackColor:
+                                _isDarkMode ? Colors.white12 : Colors.black12,
+                            trackShape: RoundedRectSliderTrackShape(),
+                            trackHeight: 4.0,
+                            activeTickMarkColor: Colors.transparent,
+                            inactiveTickMarkColor: Colors.transparent,
+                            valueIndicatorColor: kMyColor,
+                            thumbColor: kMyColor,
+                            overlayColor: kMyColor.withAlpha(32),
                           ),
-                          InvestmentCardText(
-                              text: 'Adjusted Amt: ₹ $inflationAmt1'),
-                        ],
-                      ),
+                          child: Slider(
+                            label: '${r.toInt()}',
+                            divisions: 29,
+                            min: 1,
+                            max: 30,
+                            value: r,
+                            onChanged: (value) {
+                              HapticFeedback.mediumImpact();
+                              setState(() {
+                                print(value);
+                                r = value;
+                                print(value);
+                                update();
+                              });
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InvestmentCardText(
+                              text: 'Time Period',
+                            ),
+                            InvestmentCardText(
+                              text: '${t.ceil().toInt()} Yr',
+                            ),
+                          ],
+                        ),
+                        //Time Period
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: kMyColor,
+                            inactiveTrackColor:
+                                _isDarkMode ? Colors.white12 : Colors.black12,
+                            trackShape: RoundedRectSliderTrackShape(),
+                            trackHeight: 4.0,
+                            activeTickMarkColor: Colors.transparent,
+                            inactiveTickMarkColor: Colors.transparent,
+                            valueIndicatorColor: kMyColor,
+                            thumbColor: kMyColor,
+                            overlayColor: kMyColor.withAlpha(32),
+                          ),
+                          child: Slider(
+                            label: '${t.toInt()}',
+                            divisions: 29,
+                            min: 1,
+                            max: 30,
+                            value: t,
+                            onChanged: (value) {
+                              HapticFeedback.mediumImpact();
+                              setState(() {
+                                print(value);
+                                t = value;
+                                print(value);
+                                update();
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        DoughnutChart(
+                          interest: ret,
+                          interestText: 'Returns',
+                          initialAmt: inv,
+                          initailAmtText: 'Invested',
+                        ),
+                        SizedBox(height: 20),
+                        // Inflation
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InvestmentCardText(
+                              text: 'Inflation',
+                            ),
+                            InvestmentCardText(
+                              text: '$i %',
+                            ),
+                          ],
+                        ),
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: kMyColor,
+                            inactiveTrackColor:
+                                _isDarkMode ? Colors.white12 : Colors.black12,
+                            trackShape: RoundedRectSliderTrackShape(),
+                            trackHeight: 4.0,
+                            activeTickMarkColor: Colors.transparent,
+                            inactiveTickMarkColor: Colors.transparent,
+                            valueIndicatorColor: kMyColor,
+                            thumbColor: kMyColor,
+                            overlayColor: kMyColor.withAlpha(32),
+                          ),
+                          child: Slider(
+                            label: '$i',
+                            divisions: 18,
+                            min: 1,
+                            max: 10,
+                            value: i,
+                            onChanged: (value) {
+                              HapticFeedback.mediumImpact();
+                              setState(() {
+                                print(value);
+                                i = value;
+                                print(value);
+                                update();
+                              });
+                            },
+                          ),
+                        ),
+                        InvestmentCardText(
+                            text: 'Adjusted Amt: ₹ $inflationAmt1'),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   AdditionalDataCard(
-                    // elevation: 5.0,
+                    elevation: 5.0,
                     title: 'SIP',
                     info:
                         'A Systematic Investment Plan (or SIP) is an investment mode through which you can invest in mutual funds. As the term indicates, it is a systematic method of investing fixed amounts of money periodically. This can be monthly, quarterly or semi-annually etc.',
@@ -362,3 +350,7 @@ class _SipState extends State<Sip> {
     );
   }
 }
+
+// elevation: 5,
+// borderRadius: BorderRadius.circular(20),
+// color: Colors.transparent,

@@ -34,10 +34,12 @@ const kNonSelectedGradient = LinearGradient(
   end: Alignment.bottomRight,
 );
 
-const kMyDarkBGColor = Color(0xFF232222);
+const kMyDarkBGColor = Color(0xFF3E3E3E);
 const kMyLightBGColor = Colors.white;
 
-ThemeData kMyLightTheme = ThemeData.light();
+ThemeData kMyLightTheme = ThemeData.light().copyWith(
+  scaffoldBackgroundColor: kMyLightBGColor,
+);
 ThemeData kMyDarkTheme = ThemeData.dark().copyWith(
   scaffoldBackgroundColor: kMyDarkBGColor,
 );

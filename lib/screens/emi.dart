@@ -1,7 +1,6 @@
 import 'package:fin_calc/utilities/doughnut_chart.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:fin_calc/utilities/constants.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -70,165 +69,150 @@ class _EmiState extends State<Emi> {
         itemCount: 1,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Material(
-                  elevation: 5,
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.transparent,
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: _isDarkMode ? kMyDarkBGColor : kMyLightBGColor),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InvestmentCardText(
-                              text: 'Loan Amt',
-                            ),
-                            InvestmentCardText(
-                              text: '₹ ${p.ceil().toInt()} L',
-                            ),
-                          ],
-                        ),
-                        //Monthly SIP
-                        SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: kMyColor,
-                            inactiveTrackColor:
-                                _isDarkMode ? Colors.white12 : Colors.black54,
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 4.0,
-                            inactiveTickMarkColor: Colors.transparent,
-                            valueIndicatorColor: kMyColor,
-                            thumbColor: kMyColor,
-                            overlayColor: kMyColor.withAlpha(32),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InvestmentCardText(
+                            text: 'Loan Amt',
                           ),
-                          child: Slider(
-                            label: '${p.toInt()}',
-                            divisions: 199,
-                            min: 1,
-                            max: 200,
-                            value: p,
-                            onChanged: (value) {
-                              HapticFeedback.mediumImpact();
-                              setState(() {
-                                print(value);
-                                p = value;
-                                print(value);
-                                update();
-                              });
-                            },
+                          InvestmentCardText(
+                            text: '₹ ${p.ceil().toInt()} L',
                           ),
+                        ],
+                      ),
+                      //Monthly SIP
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: kMyColor,
+                          inactiveTrackColor:
+                          _isDarkMode ? Colors.white12 : Colors.black12,
+                          trackShape: RoundedRectSliderTrackShape(),
+                          trackHeight: 4.0,
+                          inactiveTickMarkColor: Colors.transparent,
+                          valueIndicatorColor: kMyColor,
+                          thumbColor: kMyColor,
+                          overlayColor: kMyColor.withAlpha(32),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InvestmentCardText(
-                              text: 'Interest Rate',
-                            ),
-                            InvestmentCardText(
-                              text: '$r %',
-                            ),
-                          ],
+                        child: Slider(
+                          label: '${p.toInt()}',
+                          divisions: 199,
+                          min: 1,
+                          max: 200,
+                          value: p,
+                          onChanged: (value) {
+                            HapticFeedback.mediumImpact();
+                            setState(() {
+                              print(value);
+                              p = value;
+                              print(value);
+                              update();
+                            });
+                          },
                         ),
-                        //Expected interest
-                        SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: kMyColor,
-                            inactiveTrackColor:
-                                _isDarkMode ? Colors.white12 : Colors.black54,
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 4.0,
-                            inactiveTickMarkColor: Colors.transparent,
-                            valueIndicatorColor: kMyColor,
-                            thumbColor: kMyColor,
-                            overlayColor: kMyColor.withAlpha(32),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InvestmentCardText(
+                            text: 'Interest Rate',
                           ),
-                          child: Slider(
-                            label: '$r',
-                            divisions: 60,
-                            min: 5,
-                            max: 20,
-                            value: r,
-                            onChanged: (value) {
-                              HapticFeedback.mediumImpact();
-                              setState(() {
-                                print(value);
-                                r = value;
-                                print(value);
-                                update();
-                              });
-                            },
+                          InvestmentCardText(
+                            text: '$r %',
                           ),
+                        ],
+                      ),
+                      //Expected interest
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: kMyColor,
+                          inactiveTrackColor:
+                          _isDarkMode ? Colors.white12 : Colors.black12,
+                          trackShape: RoundedRectSliderTrackShape(),
+                          trackHeight: 4.0,
+                          inactiveTickMarkColor: Colors.transparent,
+                          valueIndicatorColor: kMyColor,
+                          thumbColor: kMyColor,
+                          overlayColor: kMyColor.withAlpha(32),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InvestmentCardText(
-                              text: 'Time Period',
-                            ),
-                            InvestmentCardText(
-                              text: '${t.ceil().toInt()} Yr',
-                            ),
-                          ],
+                        child: Slider(
+                          label: '$r',
+                          divisions: 60,
+                          min: 5,
+                          max: 20,
+                          value: r,
+                          onChanged: (value) {
+                            HapticFeedback.mediumImpact();
+                            setState(() {
+                              print(value);
+                              r = value;
+                              print(value);
+                              update();
+                            });
+                          },
                         ),
-                        //Time Period
-                        SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: kMyColor,
-                            inactiveTrackColor:
-                                _isDarkMode ? Colors.white12 : Colors.black54,
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 4.0,
-                            activeTickMarkColor: Colors.transparent,
-                            inactiveTickMarkColor: Colors.transparent,
-                            valueIndicatorColor: kMyColor,
-                            thumbColor: kMyColor,
-                            overlayColor: kMyColor.withAlpha(32),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InvestmentCardText(
+                            text: 'Time Period',
                           ),
-                          child: Slider(
-                            label: '${t.toInt()}',
-                            divisions: 29,
-                            min: 1,
-                            max: 30,
-                            value: t,
-                            onChanged: (value) {
-                              HapticFeedback.mediumImpact();
-                              setState(() {
-                                print(value);
-                                t = value;
-                                print(value);
-                                update();
-                              });
-                            },
+                          InvestmentCardText(
+                            text: '${t.ceil().toInt()} Yr',
                           ),
+                        ],
+                      ),
+                      //Time Period
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: kMyColor,
+                          inactiveTrackColor:
+                          _isDarkMode ? Colors.white12 : Colors.black12,
+                          trackShape: RoundedRectSliderTrackShape(),
+                          trackHeight: 4.0,
+                          activeTickMarkColor: Colors.transparent,
+                          inactiveTickMarkColor: Colors.transparent,
+                          valueIndicatorColor: kMyColor,
+                          thumbColor: kMyColor,
+                          overlayColor: kMyColor.withAlpha(32),
                         ),
-                        InvestmentCardText(text: 'EMI: ₹ $emi1'),
-                        SizedBox(height: 10),
-                        DoughnutChart(
-                          tooltipBehavior: _tooltipBehavior,
-                          res: totAmt,
-                          chartData: _chartData,
-                          centerTexts: [
-                            CircularChartAnnotation(
-                              widget: InvestmentCardText(text: '₹ $totAmt'),
-                            ),
-                            CircularChartAnnotation(
-                              widget: InvestmentCardText(text: '₹ $totAmt'),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                        child: Slider(
+                          label: '${t.toInt()}',
+                          divisions: 29,
+                          min: 1,
+                          max: 30,
+                          value: t,
+                          onChanged: (value) {
+                            HapticFeedback.mediumImpact();
+                            setState(() {
+                              print(value);
+                              t = value;
+                              print(value);
+                              update();
+                            });
+                          },
+                        ),
+                      ),
+                      InvestmentCardText(text: 'EMI: ₹ $emi1'),
+                      SizedBox(height: 20),
+                      DoughnutChart(
+                        initialAmt: p*100000,
+                        initailAmtText: 'Principle',
+                        interest: i,
+                        interestText: 'Interest',
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 AdditionalDataCard(
                   elevation: 5.0,
                   title: 'EMI',

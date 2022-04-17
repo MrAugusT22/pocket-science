@@ -2,11 +2,13 @@ import 'package:fin_calc/models/blob.dart';
 import 'package:fin_calc/models/button.dart';
 import 'package:fin_calc/screens/home.dart';
 import 'package:fin_calc/utilities/constants.dart';
+import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -19,7 +21,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
-
   static const _kToggleDuration = Duration(milliseconds: 300);
   static const _kRotationDuration = Duration(milliseconds: 5000);
 
@@ -73,10 +74,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, myThemeData, child) {
-      bool _isDarkMode = myThemeData.getDarkMode;
+      // bool _isDarkMode = myThemeData.getDarkMode;
+      myThemeData.getAccentColor();
       Color kMyColor = myThemeData.getMyColor;
-      InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
-      bool formComplete = false;
+      // InputDecoration kTextFieldDecoration = myThemeData.getTextFieldDecoration;
+      // bool formComplete = false;
 
       void getStarted() async {
         Navigator.pushNamed(context, HomePage.id);
@@ -129,7 +131,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             'Pocket',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: kMyColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+                                color: kMyColor.computeLuminance() > 0.5
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontFamily: 'RobotoMono',
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
@@ -140,7 +144,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             'Science',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: kMyColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+                                color: kMyColor.computeLuminance() > 0.5
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontFamily: 'RobotoMono',
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
@@ -154,15 +160,41 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(10),
-              child: Button(
-                text: 'Get Started',
+              padding: const EdgeInsets.all(20),
+              child: NeumorphicButton(
                 onPressed: () {
                   HapticFeedback.mediumImpact();
                   getStarted();
                 },
-                buttonColor: kMyColor,
-                  // textColor: kMyColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+                style: NeumorphicStyle(
+                  shape: NeumorphicShape.flat,
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
+                  depth: 5,
+                  lightSource: LightSource.topLeft,
+                  color: kMyColor,
+                  intensity: 0.2,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InvestmentCardText(
+                      text: 'Get Started',
+                      color: kMyColor.computeLuminance() > 0.5
+                          ? Colors.black
+                          : Colors.white,
+                      fontSize: 30.0,
+                    ),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      size: 40,
+                      color: kMyColor.computeLuminance() > 0.5
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ],
+                ),
+                // textColor:
               ),
             ),
           ],
@@ -171,7 +203,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     });
   }
 }
-
 
 // if (snapshot.connectionState == ConnectionState.waiting) {
 //               return Center(child: CircularProgressIndicator());

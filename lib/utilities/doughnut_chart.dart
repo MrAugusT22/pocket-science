@@ -4,7 +4,6 @@ import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 

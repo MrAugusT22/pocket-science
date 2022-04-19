@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/calculations.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:fin_calc/utilities/additional_info_card.dart';
 
 enum Mode { sip, cagr }
@@ -24,8 +23,6 @@ class Sip extends StatefulWidget {
 }
 
 class _SipState extends State<Sip> {
-  TextEditingController _textEditingController = TextEditingController();
-
   double i = 6;
   double p = 5000;
   double r = 10;
@@ -41,15 +38,12 @@ class _SipState extends State<Sip> {
   String inflationAmt1 = '';
 
   Mode selectedMode = Mode.sip;
-  List<InvestmentData> _chartData = [];
-  late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     update();
-    _tooltipBehavior = TooltipBehavior(enable: true);
   }
 
   void update() {
@@ -73,15 +67,6 @@ class _SipState extends State<Sip> {
       inflationAmt = amt * pow((1 + 6 / 100), t * (-1)).toDouble();
       inflationAmt1 = format(inflationAmt, 2);
     }
-    _chartData = getChartData();
-  }
-
-  List<InvestmentData> getChartData() {
-    List<InvestmentData> chartData = [
-      InvestmentData(amtType: 'Initial Amt', amt: inv),
-      InvestmentData(amtType: 'Returns', amt: ret),
-    ];
-    return chartData;
   }
 
   @override
@@ -151,7 +136,7 @@ class _SipState extends State<Sip> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

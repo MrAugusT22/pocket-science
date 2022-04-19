@@ -1,6 +1,4 @@
 import 'package:fin_calc/screens/cagr.dart';
-import 'package:fin_calc/screens/currency.dart';
-import 'package:fin_calc/screens/dashboard.dart';
 import 'package:fin_calc/screens/emi.dart';
 import 'package:fin_calc/screens/profile.dart';
 import 'package:fin_calc/screens/sip.dart';
@@ -39,12 +37,10 @@ class FinCalc extends StatelessWidget {
             routes: {
               WelcomeScreen.id: (context) => WelcomeScreen(),
               HomePage.id: (context) => Center(child: HomePage()),
-              Dashboard.id: (context) => Dashboard(),
               Profile.id: (context) => Profile(),
               Sip.id: (context) => Sip(),
               Cagr.id: (context) => Cagr(),
               Emi.id: (context) => Emi(),
-              Currency.id: (context) => Currency(),
             },
           );
         },

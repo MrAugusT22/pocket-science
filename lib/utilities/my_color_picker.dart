@@ -1,7 +1,6 @@
 import 'package:fin_calc/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'constants.dart';
 
 class MyColorPicker extends StatelessWidget {
   final color;
@@ -12,7 +11,6 @@ class MyColorPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserData>(
       builder: (context, myThemeData, child) {
-        bool _isDarkMode = myThemeData.getDarkMode;
         return GestureDetector(
           onTap: () {
             myThemeData.updateMyColor(color);

@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:fin_calc/utilities/investment_card_text.dart';
 import 'package:fin_calc/utilities/calculations.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:fin_calc/utilities/additional_info_card.dart';
 
 class Emi extends StatefulWidget {
@@ -27,14 +26,11 @@ class _EmiState extends State<Emi> {
   double i = 0;
   String interest = '';
   String totAmt = '';
-  List<InvestmentData> _chartData = [];
-  late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tooltipBehavior = TooltipBehavior(enable: true);
     update();
   }
 
@@ -44,7 +40,6 @@ class _EmiState extends State<Emi> {
     i = (emi * 12 * t) - (p * 100000);
     interest = format(i, 2);
     totAmt = format((p * 100000 + i), 2);
-    _chartData = getChartData();
   }
 
   List<InvestmentData> getChartData() {
